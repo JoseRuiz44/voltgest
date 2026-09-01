@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Nuevo artículo</h2>
+    <form method="POST" action="{{ url_for('new_article') }}">
+
+        <label>Nombre:</label>
+        <input type="text" name="name">
+
+        <label>Precio:</label>
+        <input type="text" name="price">
+
+        <label>Ámbito:</label>
+        <select name="scope">
+            <option value="new_build">Obra nueva</option>
+            <option value="renovation">Reforma</option>
+            <option value="both">Ambos</option>
+        </select>
+
+        <button type="submit">Guardar</button>
+    </form>
+
+{% endblock %}
