@@ -1,0 +1,21 @@
+# Virtual environment
+venv/
+.vscode/
+build/
+backups/
+pdfs/
+
+# Python caches
+__pycache__/
+*.pyc
+
+# Flask build (APK, generated executables)
+build/
+
+# Local test data and PDFs
+articles.json
+configuration.json
+budgets.json
+prueba.py
+*.pdf
+*.log
