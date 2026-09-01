@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Editar artículo</h2>
+    <form method="POST" action="{{ url_for('edit_article', name=article['name']) }}">
+        <label>Nombre:</label>
+        <input type="text" name="name" value="{{ article['name'] }}">
+
+        <label>Precio:</label>
+        <input type="text" name="price" value="{{ article['price'] }}">
+
+        <label>Ámbito</label>
+        <select name="scope">
+            <option value="new_build" {% if article['scope'] == 'new_build' %}selected{% endif %}>Obra nueva</option>
+            <option value="renovation" {% if article['scope'] == 'renovation' %}selected{% endif %}>Reforma</option>
+            <option value="both" {% if article['scope'] == 'both' %}selected{% endif %}>Ambos</option>
+        </select>
+
+        <button type="submit">Guardar cambios</button>
+    </form>
+{% endblock %}

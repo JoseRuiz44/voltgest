@@ -27,5 +27,31 @@ def new_article():
         return redirect(url_for("catalog"))
     return render_template("new_article.html")
 
+@app.route("/article/delete/<name>")
+def delete_article(name):
+    articles = load_articles()
+    articles = [a for a in articles if a['name'] != name]
+    save_articles(articles)
+    return redirect(url_for("catalog"))
+
+def find_article(articles, name):
+    for a in articles:
+        if a['name'] == name:
+            return a
+    return None
+
+@app.route("/article/edit/<name>", methods=["GET", "POST"])
+def edit_article(name):
+    articles = load_articles()
+    article = find_article(articles, name)
+
+    if request.method == "POST":
+        article['name'] = request.form['name']
+        article['price'] = float(request.form['price'])
+        article['scope'] = request.form['scope']
+        save_articles(articles)
+        return redirect(url_for("catalog"))
+    return render_template("edit_article.html", article=article)
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
