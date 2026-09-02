@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+    <a href="{{ url_for('new_article') }}">Nuevo artículo</a>
     <h2>Artículos</h2>
     <ul>
         {% for article in articles %}

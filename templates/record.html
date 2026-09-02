@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Historial presupuestos</h2>
+    <ul>
+        {% for budget in budgets %}
+        <li>
+            {{ budget['number'] }}
+            {{ budget['date'] }}
+            {{ budget['client']['name'] }}
+            {{ budget['totals']['total'] }} €
+        </li>
+        {% endfor %}
+    </ul>
+    
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <fieldset>
+        <legend>Selecciona IVA</legend>
+        <input type="radio" id="vat_rate_10" name="vat_rate" value="10">
+        <label for="vat_rate_10">10%</label>
+
+        <input type="radio" id="vat_rate_21" name="vat_rate" value="21" checked>
+        <label for="vat_rate_21">21%</label>
+    </fieldset>
+
+    <h2>Añadir artículos</h2>
+    <ul>
+        {% for a in articles %}
+            {% if a['scope'] == budget['work_type'] or a['scope'] == 'both' %}
+                <li>{{ a['name'] }} - {{ a['scope'] }} - {{ a['price'] }}</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+
+{% endblock %}
