@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h2>Resumen del presupuesto</h2>
+
+    <p>Tipo: {{ budget['work_type'] }}</p>
+    <p>Cliente: {{ budget['client']['name'] }}</p>
+    
+    <h3>Artículos</h3>
+    <ul>
+        {% for line in budget['lines'] %}
+            <li>{{ line['article'] }} - {{ line['units'] }} uds - {{ line['price'] | money }}/ud - {{ (line['price'] * line['units']) | money }}</li>
+        {% endfor %}
+    </ul>
+
+    <p>Base imponible: {{ totals['base'] | money }}</p>
+    <p>IVA ({{ budget['vat_rate'] }}%): {{ totals['quota'] | money }}</p>
+    <p>TOTAL: {{ totals['total'] | money }}</p>
+    
+    <form method="POST" action="{{ url_for('save_budget_final') }}">
+        <button type="submit">Guardar presupuesto</button>
+    </form>
+
+{% endblock %}

@@ -1,8 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-from data import load_articles, create_article, save_articles, load_configuration, save_configuration, load_budgets, save_budgets
+from data import load_articles, create_article, save_articles, load_configuration, save_configuration, load_budgets, save_budgets, create_line
+from calculations import calculate_line, calculate_totals, generate_number
+from pdf import format_money
+import datetime
 
 app = Flask(__name__)
 app.secret_key = "voltgest-clave-secreta-2026"
+app.jinja_env.filters['money'] = format_money
+
 
 @app.route("/")
 def home():
@@ -29,17 +34,74 @@ def save_client():
     session.modified = True
     return redirect(url_for("budget_articles"))
 
-@app.route("/budget/articles/")
+@app.route("/budget/vat_rate_articles/")
 def budget_articles():
     articles = load_articles()
     return render_template("budget_articles.html", articles=articles, budget=session['budget'])
+
+@app.route("/budget/save_articles_budget/", methods=['POST'])
+def save_articles_budget():
+    session['budget']['vat_rate'] = int(request.form['vat_rate'])
+    session['budget']['lines'] = []
+
+    articles = load_articles()
+    for a in articles:
+        campo = "units_" + a['name']
+        units = int(request.form.get(campo, 0))
+        if units > 0:
+            session['budget']['lines'].append(create_line(a, units))
+    session.modified = True
+    return redirect(url_for("show_summary"))
+
+@app.route("/budget/summary")
+def show_summary():
+    budget = session['budget']
+    calculated_lines = [calculate_line(l['price'], l['units'], budget['vat_rate']) for l in budget['lines']]
+    totals = calculate_totals(calculated_lines)
+    return render_template("summary.html", budget=budget, totals=totals)
+
+@app.route("/budget/save_budget_final", methods=["POST"])
+def save_budget_final():
+    budgets = load_budgets()
+    budget = session['budget']
+    year = datetime.date.today().year
+    date = datetime.date.today().isoformat()
+    budget_number = generate_number(budgets, year)
+    calculated_lines = [calculate_line(l['price'], l['units'], budget['vat_rate']) for l in budget['lines']]
+    totals = calculate_totals(calculated_lines)
+    budget = {
+        "number": budget_number,
+        "date": date,
+        "work_type": budget["work_type"],
+        "client": budget["client"],
+        "lines": budget["lines"],
+        "vat_rate": budget["vat_rate"],
+        "totals": totals,
+    }
+    budgets.append(budget)
+    save_budgets(budgets)
+    session.pop('budget', None)
+    return redirect(url_for("preview", number=budget_number))
+
+@app.route("/budget/preview/<number>")
+def preview(number):
+    budgets = load_budgets()
+    budget = None
+    for b in budgets:
+        if b['number'] == number:
+            budget = b
+            break
+    config = load_configuration
+    calculated_lines = [calculate_line(l['price'], l['units'], budget['vat_rate']) for l in budget['lines']]
+    totals = calculate_totals(calculated_lines)
+    return render_template("preview.html", budget=budget, totals=totals, config=config)
 
 @app.route("/catalog")
 def catalog():
     articles = load_articles()
     return render_template("catalog.html", articles=articles)
 
-@app.route("/article/new", methods=["GET", "POST"])
+@app.route("/catalog/new", methods=["GET", "POST"])
 def new_article():
     if request.method == "POST":
         name = request.form['name']
@@ -51,7 +113,7 @@ def new_article():
         return redirect(url_for("catalog"))
     return render_template("new_article.html")
 
-@app.route("/article/delete/<name>")
+@app.route("/catalog/delete/<name>")
 def delete_article(name):
     articles = load_articles()
     articles = [a for a in articles if a['name'] != name]
@@ -64,7 +126,7 @@ def find_article(articles, name):
             return a
     return None
 
-@app.route("/article/edit/<name>", methods=["GET", "POST"])
+@app.route("/catalog/edit/<name>", methods=["GET", "POST"])
 def edit_article(name):
     articles = load_articles()
     article = find_article(articles, name)
