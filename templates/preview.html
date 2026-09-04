@@ -1,11 +1,19 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <h2>Presupuesto {{ number }}</h2>
 
-    <h2>Presupuesto {{ budget['number'] }} guardado</h2>
-    <p>Cliente: {{ budget['client']['name'] }}</p>
-    <p>Total: {{ budget['totals']['total'] | money }}</p>
+    <button onclick="mostrarPDF('client')">PDF Cliente</button>
+    <button onclick="mostrarPDF('business')">PDF Empresa</button>
 
-    <a href="{{ url_for('budget_pdf', number=budget['number'], version='cliente') }}" tarjet="_blank">Ver PDF cliente</a>
-    <a href="{{ url_for('budget_pdf', number=budget['number'], version='empresa') }}" target="_blank">Ver PDF empresa</a>
+    <iframe id="visor_pdf" 
+            src="{{ url_for('budget_pdf', number=number, version='client') }}" 
+            width="100%" height="800px"></iframe>
+
+    <script>
+        function mostrarPDF(version) {
+            const visor = document.getElementById("visor_pdf");
+            visor.src = "/budget/pdf/{{ number }}/" + version;
+        }
+    </script>
 {% endblock %}

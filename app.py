@@ -9,16 +9,20 @@ app = Flask(__name__)
 app.secret_key = "voltgest-clave-secreta-2026"
 app.jinja_env.filters['money'] = format_money
 
+SCOPE_ES = {"new_build": "Obra nueva", "renovation": "Reforma", "both": "Ambos"}
+app.jinja_env.globals['SCOPE_ES'] = SCOPE_ES
+
+
 
 @app.route("/")
 def home():
     articles = load_articles()
-    empresa = "VoltGest"
+    enterprise = "VoltGest"
     version = "1.0"
-    return render_template("home.html", empresa=empresa, version=version, articles=articles)
+    return render_template("home.html", enterprise=enterprise, version=version, articles=articles)
 
 @app.route("/budget/client/<work_type>")
-def new_budget(work_type):
+def budget_client(work_type):
     session['budget'] = {
         "work_type": work_type,
         "client": {"name": "", "address": "", "phone": ""},
@@ -86,16 +90,7 @@ def save_budget_final():
 
 @app.route("/budget/preview/<number>")
 def preview(number):
-    budgets = load_budgets()
-    budget = None
-    for b in budgets:
-        if b['number'] == number:
-            budget = b
-            break
-    config = load_configuration
-    calculated_lines = [calculate_line(l['price'], l['units'], budget['vat_rate']) for l in budget['lines']]
-    totals = calculate_totals(calculated_lines)
-    return render_template("preview.html", budget=budget, totals=totals, config=config)
+    return render_template("preview.html", number=number)
 
 @app.route("/budget/pdf/<number>/<version>")
 def budget_pdf(number, version):
@@ -106,7 +101,7 @@ def budget_pdf(number, version):
             budget = b
             break
     config = load_configuration()
-    internal = (version == "empresa")
+    internal = (version == "business")
     pdf_bytes = generate_pdf(budget, config, internal)      # ahora devuelve bytes
     return send_file(
         BytesIO(pdf_bytes),
@@ -122,7 +117,7 @@ def catalog():
 @app.route("/catalog/new", methods=["GET", "POST"])
 def new_article():
     if request.method == "POST":
-        name = request.form['name']
+        name = request.form['name'].strip()
         price = float(request.form['price'])
         scope = request.form['scope']
         articles = load_articles()
@@ -162,6 +157,13 @@ def record():
     budgets = load_budgets()
     return render_template("record.html", budgets=budgets)
 
+@app.route("/budget/delete/<number>")
+def delete_budget(number):
+    budgets = load_budgets()
+    budgets = [b for b in budgets if b['number'] != number]
+    save_budgets(budgets)
+    return redirect(url_for("record"))
+
 @app.route("/settings", methods=["GET", "POST"])
 def settings():
     config = load_configuration()
@@ -174,7 +176,7 @@ def settings():
         config['business']['phone'] = request.form['phone']
         config['business']['email'] = request.form['email']
         config['conditions'] = request.form['conditions']
-        config['validity_days'] = request.form['validity_days']
+        config['validity_days'] = int(request.form['validity_days'])
         save_configuration(config)
         return redirect(url_for("home"))
     return render_template("settings.html", config=config)
