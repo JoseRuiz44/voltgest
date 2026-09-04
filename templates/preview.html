@@ -2,4 +2,10 @@
 
 {% block content %}
 
+    <h2>Presupuesto {{ budget['number'] }} guardado</h2>
+    <p>Cliente: {{ budget['client']['name'] }}</p>
+    <p>Total: {{ budget['totals']['total'] | money }}</p>
+
+    <a href="{{ url_for('budget_pdf', number=budget['number'], version='cliente') }}" tarjet="_blank">Ver PDF cliente</a>
+    <a href="{{ url_for('budget_pdf', number=budget['number'], version='empresa') }}" target="_blank">Ver PDF empresa</a>
 {% endblock %}

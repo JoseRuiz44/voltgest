@@ -1,6 +1,4 @@
 from fpdf import FPDF
-from data import load_configuration, load_budgets
-import data
 import datetime
 import os
 
@@ -150,11 +148,7 @@ def generate_pdf(budget, config, internal):
     write_text(pdf, 20, 272, "Generado por VoltGest", color=COLOR_TEXT_HEADER, size=8)
     write_text(pdf, 20, 272, "Página 1 de 1", width=170, align="R", color=COLOR_TEXT_HEADER, size=8)
 
-    version = "empresa" if internal else "cliente"
-    os.makedirs(data.PDFS_DIR, exist_ok=True)
-    filename = os.path.join(data.PDFS_DIR, f"{budget['number']}-{version}.pdf")
-    pdf.output(filename)
-    return filename
+    return bytes(pdf.output())
 
 def generate_both(budget, config):
     generate_pdf(budget, config, internal=True)

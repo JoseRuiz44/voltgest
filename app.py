@@ -1,8 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, send_file
 from data import load_articles, create_article, save_articles, load_configuration, save_configuration, load_budgets, save_budgets, create_line
 from calculations import calculate_line, calculate_totals, generate_number
-from pdf import format_money
+from pdf import format_money, generate_pdf
 import datetime
+from io import BytesIO
 
 app = Flask(__name__)
 app.secret_key = "voltgest-clave-secreta-2026"
@@ -95,6 +96,23 @@ def preview(number):
     calculated_lines = [calculate_line(l['price'], l['units'], budget['vat_rate']) for l in budget['lines']]
     totals = calculate_totals(calculated_lines)
     return render_template("preview.html", budget=budget, totals=totals, config=config)
+
+@app.route("/budget/pdf/<number>/<version>")
+def budget_pdf(number, version):
+    budgets = load_budgets()
+    budget = None
+    for b in budgets:
+        if b['number'] == number:
+            budget = b
+            break
+    config = load_configuration()
+    internal = (version == "empresa")
+    pdf_bytes = generate_pdf(budget, config, internal)      # ahora devuelve bytes
+    return send_file(
+        BytesIO(pdf_bytes),
+        mimetype="application/pdf",
+        download_name=f"{number}-{version}.pdf"
+    )
 
 @app.route("/catalog")
 def catalog():
