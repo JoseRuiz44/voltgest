@@ -6,10 +6,10 @@
     <form method="POST" action="{{ url_for('new_article') }}">
 
         <label>Nombre:</label>
-        <input type="text" name="name">
+        <input type="text" name="name" value="{{ name if name else '' }}">
 
         <label>Precio:</label>
-        <input type="text" name="price">
+        <input type="text" name="price" value="{{ price if price else '' }}">
 
         <label>Ámbito:</label>
         <select name="scope">

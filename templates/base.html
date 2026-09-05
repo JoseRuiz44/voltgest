@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>VoltGest</title>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <title>VoltGest</title>
+    </head>
 
-<body>
-    <h1>VoltGest</h1>
-    
-    <nav>
-        <a href="{{ url_for('home') }}">Inicio</a>
-        <a href="{{ url_for('catalog') }}">Catálogo</a>
-        <a href="{{ url_for('record') }}">Historial</a>
-        <a href="{{ url_for('settings') }}">Ajustes</a>
-    </nav>
+    <body>
+        <h1>VoltGest</h1>
+        
+        <nav>
+            <a href="{{ url_for('home') }}">Inicio</a>
+            <a href="{{ url_for('catalog') }}">Catálogo</a>
+            <a href="{{ url_for('record') }}">Historial</a>
+            <a href="{{ url_for('settings') }}">Ajustes</a>
+        </nav>
 
-    {% block content %}{% endblock %}
-</body>
+        {% for message in get_flashed_messages() %}
+            <p>{{ message }}</p>
+        {% endfor %}
+
+        {% block content %}{% endblock %}
+    </body>
 </html>

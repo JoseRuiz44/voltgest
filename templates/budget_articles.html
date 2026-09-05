@@ -15,13 +15,13 @@
             {% for a in articles %}
                 {% if a['scope'] == budget['work_type'] or a['scope'] == 'both' %}
                     <li>
-                        {{ a['name'] }} - {{ a['price'] }}
+                        {{ a['name'] }} - {{ money(a['price']) }}
                         <input type="number" name="units_{{ a['name'] }}" value="0" min="0">
                     </li>
                 {% endif %}
             {% endfor %}
         </ul>
 
-        <button type="submit">Ver resumen</button>
+        <button type="submit">Guardar artículos</button>
     </form>
 {% endblock %}

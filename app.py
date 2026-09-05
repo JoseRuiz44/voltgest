@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, send_file
+from flask import Flask, render_template, request, redirect, url_for, session, send_file, flash
 from data import load_articles, create_article, save_articles, load_configuration, save_configuration, load_budgets, save_budgets, create_line
 from calculations import calculate_line, calculate_totals, generate_number
 from pdf import format_money, generate_pdf
@@ -7,12 +7,10 @@ from io import BytesIO
 
 app = Flask(__name__)
 app.secret_key = "voltgest-clave-secreta-2026"
-app.jinja_env.filters['money'] = format_money
+app.jinja_env.globals['money'] = format_money
 
 SCOPE_ES = {"new_build": "Obra nueva", "renovation": "Reforma", "both": "Ambos"}
 app.jinja_env.globals['SCOPE_ES'] = SCOPE_ES
-
-
 
 @app.route("/")
 def home():
@@ -48,7 +46,6 @@ def budget_articles():
 def save_articles_budget():
     session['budget']['vat_rate'] = int(request.form['vat_rate'])
     session['budget']['lines'] = []
-
     articles = load_articles()
     for a in articles:
         campo = "units_" + a['name']
@@ -85,6 +82,7 @@ def save_budget_final():
     }
     budgets.append(budget)
     save_budgets(budgets)
+    flash(f"Presupuesto '{budget['number']}' creado correctamente")
     session.pop('budget', None)
     return redirect(url_for("preview", number=budget_number))
 
@@ -118,11 +116,32 @@ def catalog():
 def new_article():
     if request.method == "POST":
         name = request.form['name'].strip()
-        price = float(request.form['price'])
         scope = request.form['scope']
+        price_text = request.form['price']
+        
+        try:
+            price = float(price_text.replace(",", "."))
+        except ValueError:
+            flash("Introduce un numero en el campo precio")
+            return render_template("new_article.html", name=name, price=price_text, scope=scope)
+        
+        if not name:
+            flash("El nombre del artículo no puede estar vacío")
+            return render_template("new_article.html", name=name, price=price_text, scope=scope)
+
+        if price <= 0:
+            flash("El precio debe ser mayor que 0")
+            return render_template("new_article.html", name=name, price=price_text, scope=scope)
+        
         articles = load_articles()
+        for article in articles:
+            if name.lower() == article['name'].lower():
+                flash("El nombre del artículo ya existe")
+                return render_template("new_article.html", name=name, price=price_text, scope=scope)
+
         articles.append(create_article(name, price, scope))
         save_articles(articles)
+        flash(f"Artículo '{name}' creado correctamente")
         return redirect(url_for("catalog"))
     return render_template("new_article.html")
 
@@ -135,22 +154,48 @@ def delete_article(name):
 
 def find_article(articles, name):
     for a in articles:
-        if a['name'] == name:
+        if a['name'].lower() == name.lower():
             return a
     return None
 
 @app.route("/catalog/edit/<name>", methods=["GET", "POST"])
 def edit_article(name):
     articles = load_articles()
-    article = find_article(articles, name)
-
+    current_article = find_article(articles, name)
     if request.method == "POST":
-        article['name'] = request.form['name']
-        article['price'] = float(request.form['price'])
-        article['scope'] = request.form['scope']
+        current_name = request.form['name'].strip()
+        current_scope = request.form['scope']
+        price_text = request.form['price']
+
+        try:
+            current_price = float(price_text.replace(",", "."))
+        except ValueError:
+            flash("Introduce un numero en el campo precio")
+            return render_template("edit_article.html", article=current_article)
+        
+        if not current_name:
+            flash("El nombre del artículo no puede estar vacío")
+            return render_template("edit_article.html", article=current_article)
+        
+        if current_price <= 0:
+            flash("El precio debe ser mayor que 0")
+            return render_template("edit_article.html", article=current_article)
+        
+        for a in articles:
+            if a is current_article:
+                continue
+            if current_name.lower() == a['name'].lower():
+                flash("El nombre del artículo ya existe")
+                return render_template("edit_article.html", article=current_article)
+
+        current_article['name'] = current_name
+        current_article['price'] = current_price
+        current_article['scope'] = current_scope
+
         save_articles(articles)
+        flash(f"Artículo '{current_article['name']}' editado correctamente")
         return redirect(url_for("catalog"))
-    return render_template("edit_article.html", article=article)
+    return render_template("edit_article.html", article=current_article)
 
 @app.route("/record")
 def record():
@@ -178,6 +223,7 @@ def settings():
         config['conditions'] = request.form['conditions']
         config['validity_days'] = int(request.form['validity_days'])
         save_configuration(config)
+        flash("Ajustes guardados correctamente")
         return redirect(url_for("home"))
     return render_template("settings.html", config=config)
 

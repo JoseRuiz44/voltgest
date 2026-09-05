@@ -6,7 +6,7 @@
     <ul>
         {% for article in articles %}
             <li>
-                {{ article['name'] }} - {{ SCOPE_ES[article['scope']] }} - {{ article['price'] }}
+                {{ article['name'] }} - {{ SCOPE_ES[article['scope']] }} - {{ money(article['price']) }}
                 <a href="{{ url_for('delete_article', name=article['name']) }}">Borrar</a>
                 <a href="{{ url_for('edit_article', name=article['name']) }}">Editar</a>
             </li>
