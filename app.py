@@ -14,6 +14,7 @@ app.jinja_env.globals['SCOPE_ES'] = SCOPE_ES
 
 @app.route("/")
 def home():
+    session.pop('budget', None)
     articles = load_articles()
     enterprise = "VoltGest"
     version = "1.0"
@@ -130,6 +131,7 @@ def budget_pdf(number, version):
 
 @app.route("/catalog")
 def catalog():
+    session.pop('budget', None)
     articles = load_articles()
     return render_template("catalog.html", articles=articles)
 
@@ -220,6 +222,7 @@ def edit_article(name):
 
 @app.route("/record")
 def record():
+    session.pop('budget', None)
     budgets = load_budgets()
     return render_template("record.html", budgets=budgets)
 
@@ -232,6 +235,7 @@ def delete_budget(number):
 
 @app.route("/settings", methods=["GET", "POST"])
 def settings():
+    session.pop('budget', None)
     config = load_configuration()
     if request.method == "POST":
         name = request.form['name']
