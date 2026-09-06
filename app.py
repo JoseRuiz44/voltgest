@@ -53,6 +53,9 @@ def save_articles_budget():
         if units > 0:
             session['budget']['lines'].append(create_line(a, units))
     session.modified = True
+    if not session['budget']['lines']:
+        flash("Añade al menos un artículo al presupuesto")
+        return redirect(url_for("budget_articles"))
     return redirect(url_for("show_summary"))
 
 @app.route("/budget/summary")
@@ -64,8 +67,11 @@ def show_summary():
 
 @app.route("/budget/save_budget_final", methods=["POST"])
 def save_budget_final():
-    budgets = load_budgets()
     budget = session['budget']
+    if not budget['lines']:
+        flash("Añade al menos un artículo al presupuesto")
+        return redirect(url_for("budget_articles"))
+    budgets = load_budgets()
     year = datetime.date.today().year
     date = datetime.date.today().isoformat()
     budget_number = generate_number(budgets, year)
@@ -212,16 +218,30 @@ def delete_budget(number):
 @app.route("/settings", methods=["GET", "POST"])
 def settings():
     config = load_configuration()
-
     if request.method == "POST":
-        config['business']['name'] = request.form['name']
-        config['business']['last_name'] = request.form['last_name']
-        config['business']['tax_id'] = request.form['tax_id']
-        config['business']['address'] = request.form['address']
-        config['business']['phone'] = request.form['phone']
-        config['business']['email'] = request.form['email']
-        config['conditions'] = request.form['conditions']
-        config['validity_days'] = int(request.form['validity_days'])
+        name = request.form['name']
+        last_name = request.form['last_name']
+        tax_id = request.form['tax_id']
+        address = request.form['address']
+        phone = request.form['phone']
+        email = request.form['email']
+        validity_days = request.form['validity_days']
+        conditions = request.form['conditions']
+
+        try:
+            validity_days = int(validity_days)
+        except ValueError:
+            flash("El campo 'Validez' solo admite números enteros")
+            return render_template("settings.html", config=config)
+
+        config['business']['name'] = name
+        config['business']['last_name'] = last_name
+        config['business']['tax_id'] = tax_id
+        config['business']['address'] = address
+        config['business']['phone'] = phone
+        config['business']['email'] = email
+        config['validity_days'] = validity_days
+        config['conditions'] = conditions
         save_configuration(config)
         flash("Ajustes guardados correctamente")
         return redirect(url_for("home"))
