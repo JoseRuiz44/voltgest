@@ -2,6 +2,8 @@
 
 {% block content %}
 
+    <a href="{{ url_for('budget_articles') }}">Volver</a>
+
     <h2>Resumen del presupuesto</h2>
 
     <p>Tipo: {{ SCOPE_ES[budget['work_type']] }}</p>

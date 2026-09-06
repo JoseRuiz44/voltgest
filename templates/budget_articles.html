@@ -1,12 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+    <a href="{{ url_for('budget_client', work_type=session['budget']['work_type']) }}">Volver</a>
+
     <form method="POST" action="{{ url_for('save_articles_budget') }}">
         <fieldset>
             <legend>Selecciona IVA</legend>
-            <input type="radio" id="vat_rate_10" name="vat_rate" value="10">
+            <input type="radio" id="vat_rate_10" name="vat_rate" value="10" {% if budget['vat_rate'] == 10 %}checked{% endif %}>
             <label for="vat_rate_10">10%</label>
-            <input type="radio" id="vat_rate_21" name="vat_rate" value="21" checked>
+            <input type="radio" id="vat_rate_21" name="vat_rate" value="21" {% if budget['vat_rate'] == 21 %}checked{% endif %}>
             <label for="vat_rate_21">21%</label>
         </fieldset>
 
@@ -16,7 +19,7 @@
                 {% if a['scope'] == budget['work_type'] or a['scope'] == 'both' %}
                     <li>
                         {{ a['name'] }} - {{ money(a['price']) }}
-                        <input type="number" name="units_{{ a['name'] }}" value="0" min="0">
+                        <input type="number" name="units_{{ a['name'] }}" value="{{ units_by_article.get(a['name'], 0) }}" min="0">
                     </li>
                 {% endif %}
             {% endfor %}

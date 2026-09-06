@@ -22,12 +22,13 @@ def home():
 
 @app.route("/budget/client/<work_type>")
 def budget_client(work_type):
-    session['budget'] = {
-        "work_type": work_type,
-        "client": {"name": "", "address": "", "phone": ""},
-        "vat_rate": 21,
-        "lines": []
-    }
+    if 'budget' not in session:
+        session['budget'] = {
+            "work_type": work_type,
+            "client": {"name": "", "address": "", "phone": ""},
+            "vat_rate": 21,
+            "lines": []
+        }
     return render_template("budget_client.html")
 
 @app.route("/budget/client/save", methods=["POST"])
@@ -47,7 +48,8 @@ def budget_articles():
         flash("Primero inicia un presupuesto")
         return redirect(url_for("home"))
     articles = load_articles()
-    return render_template("budget_articles.html", articles=articles, budget=session['budget'])
+    units_by_article = {line['article']: line['units'] for line in session['budget']['lines']}
+    return render_template("budget_articles.html", articles=articles, budget=session['budget'], units_by_article=units_by_article)
 
 @app.route("/budget/save_articles_budget/", methods=['POST'])
 def save_articles_budget():

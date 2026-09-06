@@ -2,16 +2,19 @@
 
 {% block content %}
 
+    <a href="{{ url_for('home') }}" onclick="return confirm('Al salir se perderán los datos del presupuesto, ¿continuar?')">Volver</a>
+
     <h2>Datos del cliente</h2>
+
     <form method="POST" action="{{ url_for('save_client') }}">
         <label>Nombre:</label>
-        <input type="text" name="name">
+        <input type="text" name="name" value="{{ session['budget']['client']['name'] }}">
 
         <label>Dirección:</label>
-        <input type="text" name="address">
+        <input type="text" name="address" value="{{ session['budget']['client']['address'] }}">
 
         <label>Teléfono:</label>
-        <input type="text" name="phone">
+        <input type="text" name="phone" value="{{ session['budget']['client']['phone'] }}">
 
         <button type="submit">Guardar cliente</button>
     </form>
