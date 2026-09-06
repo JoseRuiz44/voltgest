@@ -31,6 +31,9 @@ def budget_client(work_type):
 
 @app.route("/budget/client/save", methods=["POST"])
 def save_client():
+    if 'budget' not in session:
+        flash("Primero inicia un presupuesto")
+        return redirect(url_for("home"))
     session['budget']['client']['name'] = request.form['name']
     session['budget']['client']['address'] = request.form['address']
     session['budget']['client']['phone'] = request.form['phone']
@@ -39,11 +42,17 @@ def save_client():
 
 @app.route("/budget/vat_rate_articles/")
 def budget_articles():
+    if 'budget' not in session:
+        flash("Primero inicia un presupuesto")
+        return redirect(url_for("home"))
     articles = load_articles()
     return render_template("budget_articles.html", articles=articles, budget=session['budget'])
 
 @app.route("/budget/save_articles_budget/", methods=['POST'])
 def save_articles_budget():
+    if 'budget' not in session:
+        flash("Primero inicia un presupuesto")
+        return redirect(url_for("home"))
     session['budget']['vat_rate'] = int(request.form['vat_rate'])
     session['budget']['lines'] = []
     articles = load_articles()
@@ -60,6 +69,9 @@ def save_articles_budget():
 
 @app.route("/budget/summary")
 def show_summary():
+    if 'budget' not in session:
+        flash("Primero inicia un presupuesto")
+        return redirect(url_for("home"))
     budget = session['budget']
     calculated_lines = [calculate_line(l['price'], l['units'], budget['vat_rate']) for l in budget['lines']]
     totals = calculate_totals(calculated_lines)
@@ -67,6 +79,9 @@ def show_summary():
 
 @app.route("/budget/save_budget_final", methods=["POST"])
 def save_budget_final():
+    if 'budget' not in session:
+        flash("Primero inicia un presupuesto")
+        return redirect(url_for("home"))
     budget = session['budget']
     if not budget['lines']:
         flash("Añade al menos un artículo al presupuesto")
