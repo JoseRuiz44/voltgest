@@ -1,0 +1,95 @@
+:root {
+    --bg: #F2F2F3;
+    --card-bg: #FFFFFF;
+    --text: #1D1F20;
+    --muted: #6B6D6F;
+    --accent: #5980A6;
+    --total: #0A2947;
+    --highlight: #EAEFF4;
+    --dark: #2C3F52;
+    --border: #C7C7CA;
+    --error: #9C0909;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: sans-serif;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 1rem;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+h1 {
+    color: var(--total);
+    font-size: 2.2rem;
+    font-weight: bold;
+}
+
+h2 {
+    color: var(--total);
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+
+h3 {
+    color: var(--muted);
+    font-weight: normal;
+}
+
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background-color: var(--card-bg);
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: var(--accent);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: var(--dark);
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+}
+
+a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+nav {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1rem;
+}
+
+nav a {
+    display: inline-block;
+    margin-right: 1.5rem;
+}
