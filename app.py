@@ -56,6 +56,7 @@ def save_articles_budget():
     if 'budget' not in session:
         flash("Primero inicia un presupuesto")
         return redirect(url_for("home"))
+    
     session['budget']['vat_rate'] = int(request.form['vat_rate'])
     session['budget']['lines'] = []
     articles = load_articles()
@@ -65,6 +66,10 @@ def save_articles_budget():
         if units > 0:
             session['budget']['lines'].append(create_line(a, units))
     session.modified = True
+
+    if request.form['action'] == 'back':
+            return redirect(url_for("budget_client", work_type=session['budget']['work_type']))
+
     if not session['budget']['lines']:
         flash("Añade al menos un artículo al presupuesto")
         return redirect(url_for("budget_articles"))

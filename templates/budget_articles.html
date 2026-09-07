@@ -2,9 +2,10 @@
 
 {% block content %}
 
-    <a href="{{ url_for('budget_client', work_type=session['budget']['work_type']) }}">Volver</a>
-
     <form method="POST" action="{{ url_for('save_articles_budget') }}">
+
+        <button type="submit" name="action" value="back">Volver</button>
+        
         <fieldset>
             <legend>Selecciona IVA</legend>
             <input type="radio" id="vat_rate_10" name="vat_rate" value="10" {% if budget['vat_rate'] == 10 %}checked{% endif %}>
@@ -25,6 +26,6 @@
             {% endfor %}
         </ul>
 
-        <button type="submit">Guardar artículos</button>
+        <button type="submit" name="action" value="save">Guardar artículos</button>
     </form>
 {% endblock %}
