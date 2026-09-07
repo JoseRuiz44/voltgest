@@ -1,17 +1,21 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>Historial presupuestos</h2>
+
+    <h3>HISTORIAL</h3>
+    <p> {{ number_budgets }} presupuestos </p>
+
     <ul>
         {% for budget in budgets %}
+
         <li>
             <a href="{{ url_for('preview', number=budget['number']) }}">
             {{ budget['number'] }} - {{ budget['date'] }} - {{ budget['client']['name'] }} - {{ money(budget['totals']['total']) }} €
             </a>
             <a href="{{ url_for('delete_budget', number=budget['number']) }}">Borrar</a>
         </li>
+
         {% endfor %}
     </ul>
     
-
 {% endblock %}

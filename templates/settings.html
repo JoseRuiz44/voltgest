@@ -1,9 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>Ajustes</h2>
+
+    <h3>AJUSTES</h3>
+
     <form method="POST" action="{{ url_for('settings') }}">
-        <h3>DATOS DEL NEGOCIO</h3>
+
+        <h5>DATOS DEL NEGOCIO</h5>
+
         <label>Empresa o titular:</label>
         <input type="text" name="name" value="{{ config['business']['name'] }}">
 
@@ -22,7 +26,8 @@
         <label>Email:</label>
         <input type="text" name="email" value="{{ config['business']['email'] }}">
 
-        <h3>PRESUPUESTO</h3>
+        <h5>PRESUPUESTO</h5>
+
         <label>Condiciones:</label>
         <input type="text" name="conditions" value="{{ config['conditions'] }}">
 
@@ -31,4 +36,5 @@
 
         <button type="submit">Guardar cambios</button>
     </form>
+
 {% endblock %}

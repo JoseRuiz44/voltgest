@@ -11,14 +11,18 @@ app.jinja_env.globals['money'] = format_money
 
 SCOPE_ES = {"new_build": "Obra nueva", "renovation": "Reforma", "both": "Ambos"}
 app.jinja_env.globals['SCOPE_ES'] = SCOPE_ES
+HOME_BUDGETS_COUNT = 5
 
 @app.route("/")
 def home():
     session.pop('budget', None)
     articles = load_articles()
+    budgets = load_budgets()
+    budgets = sorted(budgets, key=lambda b: b['number'], reverse=True)
+    last_budgets = budgets[:HOME_BUDGETS_COUNT]
     enterprise = "VoltGest"
     version = "1.0"
-    return render_template("home.html", enterprise=enterprise, version=version, articles=articles)
+    return render_template("home.html", enterprise=enterprise, version=version, articles=articles, last_budgets=last_budgets)
 
 @app.route("/budget/client/<work_type>")
 def budget_client(work_type):
@@ -140,7 +144,9 @@ def budget_pdf(number, version):
 def catalog():
     session.pop('budget', None)
     articles = load_articles()
-    return render_template("catalog.html", articles=articles)
+    articles = sorted(articles, key=lambda a: a['name'].lower())
+    number_articles = len(articles)
+    return render_template("catalog.html", articles=articles, number_articles=number_articles)
 
 @app.route("/catalog/new", methods=["GET", "POST"])
 def new_article():
@@ -231,7 +237,9 @@ def edit_article(name):
 def record():
     session.pop('budget', None)
     budgets = load_budgets()
-    return render_template("record.html", budgets=budgets)
+    budgets = sorted(budgets, key=lambda b: b['number'], reverse=True)
+    number_budgets = len(budgets)
+    return render_template("record.html", budgets=budgets, number_budgets=number_budgets)
 
 @app.route("/budget/delete/<number>")
 def delete_budget(number):

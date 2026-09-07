@@ -4,10 +4,26 @@
 
     <p>Bienvenido a la aplicación de presupuestos.</p>
 
-    <h2>Nuevo presupuesto</h2>
+    <h3>NUEVO PRESUPUESTO</h3>
     <p>Selecciona el tipo de trabajo</p>
 
     <a href="{{ url_for('budget_client', work_type='new_build') }}">Obra nueva</a>
     <a href="{{ url_for('budget_client', work_type='renovation') }}">Reforma</a>
+
+    <h3>ÚLTIMOS PRESUPUESTOS</h3>
+
+    {% if last_budgets %}
+    <ul>
+        {% for budget in last_budgets %}
+
+        <li>
+            <a href="{{ url_for('preview', number=budget['number']) }}">
+            {{ budget['number'] }}  - {{ budget['date'] }} - {{ budget['client']['name'] }} - {{ money(budget['totals']['total']) }}
+            </a>
+        </li>
+
+        {% endfor %}
+    </ul>
+    {% endif %}
 
 {% endblock %}
