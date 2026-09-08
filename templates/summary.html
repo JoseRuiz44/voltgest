@@ -6,20 +6,34 @@
 
     <h2>Resumen del presupuesto</h2>
 
-    <p>Tipo: {{ SCOPE_ES[budget['work_type']] }}</p>
-    <p>Cliente: {{ budget['client']['name'] }}</p>
-    
-    <h3>Artículos</h3>
+    <div class="summary-client">
+        <p>Tipo: {{ SCOPE_ES[budget['work_type']] }}</p>
+        <p>Cliente: {{ budget['client']['name'] }}</p>
+    </div>
+
     <ul>
         {% for line in budget['lines'] %}
-            <li>{{ line['article'] }} - {{ line['units'] }} uds - {{ money(line['price']) }}/ud - {{ money(line['price'] * line['units']) }}</li>
+            <li class="summary-line">
+                <span class="summary-concept">
+                    <span class="summary-article">{{ line['article'] }}</span>
+                    <span class="summary-unitprice">{{ money(line['price']) }}/ud</span>
+                </span>
+                <span class="summary-units">{{ line['units'] }} uds</span>
+                <span class="summary-amount">{{ money(line['price'] * line['units']) }}</span>
+            </li>
         {% endfor %}
     </ul>
 
-    <p>Base imponible: {{ money(totals['base']) }}</p>
-    <p>IVA ({{ budget['vat_rate'] }}%): {{ money(totals['quota']) }}</p>
-    <p>TOTAL: {{ money(totals['total']) }}</p>
-    
+    <div class="summary-subtotals">
+        <p>Base imponible: {{ money(totals['base']) }}</p>
+        <p>IVA ({{ budget['vat_rate'] }}%): {{ money(totals['quota']) }}</p>
+    </div>
+
+    <div class="summary-total">
+        <span>TOTAL</span>
+        <span>{{ money(totals['total']) }}</span>
+    </div>
+
     <form method="POST" action="{{ url_for('save_budget_final') }}">
         <button type="submit">Guardar presupuesto</button>
     </form>

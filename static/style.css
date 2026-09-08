@@ -15,9 +15,7 @@ body {
     background-color: var(--bg);
     color: var(--text);
     font-family: sans-serif;
-    max-width: auto;
-    margin: 0 auto;
-    padding: 3%;
+    margin: 0;
     font-size: 1rem;
     line-height: 1.5;
 }
@@ -81,14 +79,6 @@ li {
 a {
     color: var(--accent);
     text-decoration: none;
-}
-
-nav {
-    padding: 4% 0;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 4%;
-    display: flex;
-    gap: 6%;
 }
 
 .work-cards {
@@ -159,12 +149,22 @@ nav {
     grid-template-columns: 1fr;
 }
 
+.main {
+    padding: 3%;
+    padding-bottom: 6rem;
+}
+
 .sidebar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
     display: flex;
-    gap: 6%;
-    padding: 4% 0;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 4%;
+    justify-content: space-around;
+    background-color: var(--card-bg);
+    border-top: 1px solid var(--border);
+    padding: 0.75rem 0;
 }
 
 @media (min-width: 800px) {
@@ -173,12 +173,92 @@ nav {
         gap: 2rem;
     }
 
-    .sidebar {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        border-bottom: none;
-        border-right: 1px solid var(--border);
-        margin-bottom: 0;
+    .main {
+        padding-bottom: 0;
     }
+
+    .sidebar {
+        position: static;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 1rem;
+        padding: 0;
+        border-top: none;
+        border-right: 1px solid var(--border);
+    }
+}
+
+.article-row {
+    display: flex;
+    align-items: center;
+    gap: 4%;
+}
+
+.article-info {
+    flex: 1;
+}
+
+.article-name {
+    display: block;
+    font-weight: bold;
+    color: var(--text);
+}
+
+.article-scope {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--muted);
+}
+
+.article-price {
+    font-weight: bold;
+    color: var(--text);
+}
+
+.article-actions a {
+    margin-left: 0.5rem;
+}
+
+.summary-line {
+    display: flex;
+    align-items: center;
+    gap: 4%;
+}
+
+.summary-concept {
+    flex: 1;
+}
+
+.summary-article {
+    display: block;
+    font-weight: bold;
+    color: var(--text);
+}
+
+.summary-unitprice {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--muted);
+}
+
+.summary-units {
+    color: var(--muted);
+}
+
+.summary-amount {
+    font-weight: bold;
+    text-align: right;
+}
+
+.summary-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--total);
+    color: white;
+    padding: 1rem;
+    border-radius: 4px;
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin: 1rem 0;
 }
