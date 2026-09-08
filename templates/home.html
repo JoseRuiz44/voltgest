@@ -23,7 +23,7 @@
         {% for budget in last_budgets %}
 
         <li class="budget-row">
-            <a href="{{ url_for('preview', number=budget['number']) }}" class="budget-line">
+            <a href="{{ url_for('preview', number=budget['number']) }}" class="budget-link">
                 <span class="budget-info">
                     <span class="budget-client">{{ budget['client']['name'] }}</span>
                     <span class="budget-meta">{{ budget['number'] }} - {{ budget['date'] }}</span>

@@ -8,21 +8,25 @@
     </head>
 
     <body>
-        <h1>VoltGest</h1>
-        
-        <nav>
-            <a href="{{ url_for('home') }}" {% if session['budget'] %}onclick="return confirm('Al salir se perderán los datos del presupuesto, ¿continuar?')"{% endif %}>Inicio</a>
-            <a href="{{ url_for('catalog') }}" {% if session['budget'] %}onclick="return confirm('Al salir se perderán los datos del presupuesto, ¿continuar?')"{% endif %}>Catálogo</a>
-            <a href="{{ url_for('record') }}" {% if session['budget'] %}onclick="return confirm('Al salir se perderán los datos del presupuesto, ¿continuar?')"{% endif %}>Historial</a>
-            <a href="{{ url_for('settings') }}" {% if session['budget'] %}onclick="return confirm('Al salir se perderán los datos del presupuesto, ¿continuar?')"{% endif %}>Ajustes</a>
-        </nav>
+        <header class="topbar">
+                <h1>VoltGest</h1>
+        </header>
 
-        
-        
-        {% for message in get_flashed_messages() %}
-            <p>{{ message }}</p>
-        {% endfor %}
+        <div class="layout">
+            <nav class="sidebar">
+                <a href="{{ url_for('home') }}" {% if session['budget'] %}onclick="return confirm('Al salir se perderán los datos del presupuesto, ¿continuar?')"{% endif %}>Inicio</a>
+                <a href="{{ url_for('catalog') }}" {% if session['budget'] %}onclick="return confirm('Al salir se perderán los datos del presupuesto, ¿continuar?')"{% endif %}>Catálogo</a>
+                <a href="{{ url_for('record') }}" {% if session['budget'] %}onclick="return confirm('Al salir se perderán los datos del presupuesto, ¿continuar?')"{% endif %}>Historial</a>
+                <a href="{{ url_for('settings') }}" {% if session['budget'] %}onclick="return confirm('Al salir se perderán los datos del presupuesto, ¿continuar?')"{% endif %}>Ajustes</a>
+            </nav>
 
-        {% block content %}{% endblock %}
+            <main class="main">
+                {% for message in get_flashed_messages() %}
+                    <p class="flash">{{ message }}</p>
+                {% endfor %}
+
+                {% block content %}{% endblock %}
+            </main>
+        </div>
     </body>
 </html>
