@@ -2,13 +2,19 @@
 
 {% block content %}
 
-    <p>Bienvenido a la aplicación de presupuestos.</p>
-
     <h3>NUEVO PRESUPUESTO</h3>
-    <p>Selecciona el tipo de trabajo</p>
 
-    <a href="{{ url_for('budget_client', work_type='new_build') }}">Obra nueva</a>
-    <a href="{{ url_for('budget_client', work_type='renovation') }}">Reforma</a>
+    <div class="work-cards">
+        <a href="{{ url_for('budget_client', work_type='new_build') }}" class="work-card">
+            <span class="work-card-title">Obra nueva</span>
+            <span class="work-card-desc">Instalación completa</span>
+        </a>
+
+        <a href="{{ url_for('budget_client', work_type='renovation') }}" class="work-card">
+            <span class="work-card-title">Reforma</span>
+            <span class="work-card-desc">Cambios y reparaciones</span>
+        </a>
+    </div>
 
     <h3>ÚLTIMOS PRESUPUESTOS</h3>
 
@@ -16,9 +22,14 @@
     <ul>
         {% for budget in last_budgets %}
 
-        <li>
-            <a href="{{ url_for('preview', number=budget['number']) }}">
-            {{ budget['number'] }}  - {{ budget['date'] }} - {{ budget['client']['name'] }} - {{ money(budget['totals']['total']) }}
+        <li class="budget-row">
+            <a href="{{ url_for('preview', number=budget['number']) }}" class="budget-line">
+                <span class="budget-info">
+                    <span class="budget-client">{{ budget['client']['name'] }}</span>
+                    <span class="budget-meta">{{ budget['number'] }} - {{ budget['date'] }}</span>
+                </span>
+                <span class="budget-scope">{{ SCOPE_ES[budget['work_type']] }}</span>
+                <span class="budget-total">{{ money(budget['totals']['total']) }}</span>
             </a>
         </li>
 
