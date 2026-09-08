@@ -17,7 +17,9 @@
                 <span class="budget-scope">{{ SCOPE_ES[budget['work_type']] }}</span>
                 <span class="budget-total">{{ money(budget['totals']['total']) }}</span>
             </a>
-            <a href="{{ url_for('delete_budget', number=budget['number']) }}">Borrar</a>
+            <a href="{{ url_for('delete_budget', number=budget['number']) }}">
+                <span class="material-symbols-outlined">delete</span>
+            </a>
         </li>
 
         {% endfor %}
