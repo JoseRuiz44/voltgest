@@ -4,6 +4,7 @@ venv/
 build/
 backups/
 pdfs/
+docs/
 
 # Python caches
 __pycache__/
@@ -20,3 +21,5 @@ prueba.py
 *.pdf
 *.log
 guia_flask.md
+NOTAS_CSS.md
+flet_instructivo.md
