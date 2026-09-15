@@ -8,11 +8,22 @@
     <ul>
         {% for budget in budgets %}
 
-        <li>
-            <a href="{{ url_for('preview', number=budget['number']) }}">
-            {{ budget['number'] }} - {{ budget['date'] }} - {{ budget['client']['name'] }} - {{ money(budget['totals']['total']) }} €
+        <li class="budget-row">
+            <a class="budget-link" href="{{ url_for('preview', number=budget['number']) }}">
+                <div class="budget-info">
+                    <div class="budget-client"> {{ budget['client']['name'] }} </div>
+                    <div class="budget-meta">
+                        <div class="budget-number"> {{ budget['number'] }} </div>
+                        <div class="budget-date"> {{ budget['date'] }} </div>
+                    </div>
+                </div>
+                <div class="budget-amount">
+                    <div class="budget-type"> {{ SCOPE_ES[budget['work_type']] }} </div>
+                    <div class="budget-total"> {{ money(budget['totals']['total']) }} </div>
+                </div>
             </a>
-            <a href="{{ url_for('delete_budget', number=budget['number']) }}">Borrar</a>
+
+            <a class="budget-delete" href="{{ url_for('delete_budget', number=budget['number']) }}">Borrar</a>
         </li>
 
         {% endfor %}

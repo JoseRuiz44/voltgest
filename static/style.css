@@ -31,3 +31,98 @@ main {
     margin: 0 auto;
     padding: 1rem;
 }
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+.budget-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.25rem;
+    border-bottom: 1px solid var(--border);
+    background-color: var(--card-bg);
+    transition: background-color 150ms ease;
+}
+
+@media (hover: hover) {
+    .budget-row:hover {
+        background-color: var(--highlight);
+    }
+}
+
+.budget-row:active {
+    background-color: var(--total);
+}
+
+.budget-row:first-child {
+    border-top: 1px solid var(--border);
+}
+
+.budget-row:last-child {
+    border-bottom: none;
+}
+
+.budget-link {
+    display: flex;
+    flex-grow: 1;
+    gap: 1rem;
+    justify-content: space-between;
+    text-decoration: none;
+    color: inherit;
+}
+
+.budget-delete {
+    text-decoration: none;
+    color: inherit;
+}
+
+.budget-info {
+    display: flex;
+    flex-direction:column;
+    flex: 1;
+    min-width: 0;
+}
+
+.budget-amount {
+    display: flex;
+    flex-shrink: 0;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.budget-type {
+    text-align: right;
+    width: 4.5rem;
+    font-size: 0.80rem;
+    color: var(--accent);
+}
+
+.budget-total {
+    text-align: right;
+    width: 11ch;
+    color: var(--text);
+    font-weight: 600;
+}
+
+.budget-client {
+    color: var(--text);
+    font-weight: 400;
+}
+
+.budget-meta {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 0.80rem;
+    color: var(--muted);
+}
+
+.budget-number {
+
+}
+
+.budget-date {
+
+}
