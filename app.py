@@ -11,7 +11,7 @@ app.jinja_env.globals['money'] = format_money
 
 SCOPE_ES = {"new_build": "Obra nueva", "renovation": "Reforma", "both": "Ambos"}
 app.jinja_env.globals['SCOPE_ES'] = SCOPE_ES
-HOME_BUDGETS_COUNT = 5
+HOME_BUDGETS_COUNT = 10
 
 @app.route("/")
 def home():

@@ -1,29 +1,36 @@
 {% extends "base.html" %}
-
 {% block content %}
 
-    <p>Bienvenido a la aplicación de presupuestos.</p>
+    <h1><span class="title first">Volt</span><span class="title second">Gest</span></h1>
 
-    <h3>NUEVO PRESUPUESTO</h3>
-    <p>Selecciona el tipo de trabajo</p>
+    <h4>NUEVO PRESUPUESTO</h4>
 
-    <a href="{{ url_for('budget_client', work_type='new_build') }}">Obra nueva</a>
-    <a href="{{ url_for('budget_client', work_type='renovation') }}">Reforma</a>
+    <div class="card">
+        <a href="{{ url_for('budget_client', work_type='new_build') }}">Obra nueva</a>
+        <a href="{{ url_for('budget_client', work_type='renovation') }}">Reforma</a>
+    </div>
 
-    <h3>ÚLTIMOS PRESUPUESTOS</h3>
-
+    <h4>ÚLTIMOS PRESUPUESTOS</h4>
+    
     {% if last_budgets %}
     <ul>
         {% for budget in last_budgets %}
-
-        <li>
-            <a href="{{ url_for('preview', number=budget['number']) }}">
-            {{ budget['number'] }}  - {{ budget['date'] }} - {{ budget['client']['name'] }} - {{ money(budget['totals']['total']) }}
+        <li class="budget-row">
+            <a class="budget-link" href="{{ url_for('preview', number=budget['number']) }}">
+                <div class="budget-info">
+                    <div class="budget-client"> {{ budget['client']['name'] }} </div>
+                    <div class="budget-meta">
+                        <div class="budget-number"> {{ budget['number'] }} </div>
+                        <div class="budget-date"> {{ budget['date'] }} </div>
+                    </div>
+                </div>
+                <div class="budget-amount">
+                    <div class="budget-type"> {{ SCOPE_ES[budget['work_type']] }} </div>
+                    <div class="budget-total"> {{ money(budget['totals']['total']) }} </div>
+                </div>
             </a>
         </li>
-
         {% endfor %}
     </ul>
     {% endif %}
-
 {% endblock %}

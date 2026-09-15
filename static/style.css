@@ -10,6 +10,7 @@
     --border: #C7C7CA;        /*Bordes y divisores*/
     --error: #9C0909;         /*Errores*/
     --radio: 4px;               /*Radio de esquinas*/
+    --height-nav: 4rem;
 }
 
 *, *::before, *::after {
@@ -23,13 +24,24 @@ body {
     font-family: sans-serif;
     font-size: 1rem;
     line-height: 1.5;
+    padding: 0;
 }
 
 main {
     width: 100%;
-    max-width: 40rem;
-    margin: 0 auto;
-    padding: 1rem;
+    padding-bottom: var(--height-nav);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--bg);
+    height: var(--height-nav);
 }
 
 ul {
@@ -37,7 +49,38 @@ ul {
     padding: 0;
 }
 
-.budget-row {
+h4 {
+    font-weight: 600;
+    color: var(--muted);
+    width: 100%;
+    padding: 1rem 0 0.5rem 0.5rem;
+}
+
+.title.first {
+    padding: 1rem 0 1rem 0.5rem;
+    color: var(--total);
+}
+
+.title.second {
+    color: var(--accent);
+}
+
+.page-title {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+    background-color: var(--card-bg);
+    padding: 1rem 0.5rem 1rem 0.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.card {
+
+}
+
+.budget-row, .article-row {
+    padding: 0.25rem 0.5rem 0.25rem 0.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -48,24 +91,20 @@ ul {
 }
 
 @media (hover: hover) {
-    .budget-row:hover {
+    .budget-row:hover, .article-row:hover {
         background-color: var(--highlight);
     }
 }
 
-.budget-row:active {
-    background-color: var(--total);
+.budget-row:active, .article-row:active {
+    background-color: var(--highlight);
 }
 
-.budget-row:first-child {
-    border-top: 1px solid var(--border);
-}
-
-.budget-row:last-child {
+.budget-row:last-child, .article-row:last-child {
     border-bottom: none;
 }
 
-.budget-link {
+.budget-link, .article-edit {
     display: flex;
     flex-grow: 1;
     gap: 1rem;
@@ -74,12 +113,12 @@ ul {
     color: inherit;
 }
 
-.budget-delete {
+.budget-delete, .article-delete {
     text-decoration: none;
     color: inherit;
 }
 
-.budget-info {
+.budget-info, .article-info {
     display: flex;
     flex-direction:column;
     flex: 1;
@@ -89,23 +128,28 @@ ul {
 .budget-amount {
     display: flex;
     flex-shrink: 0;
-    gap: 0.5rem;
+    gap: 0.7rem;
     align-items: center;
 }
 
-.budget-type {
-    text-align: right;
+.budget-type, .article-scope {
+    text-align: left;
     width: 4.5rem;
     font-size: 0.80rem;
     color: var(--accent);
 }
 
-.budget-total {
-    text-align: right;
+.budget-total, .article-price{
+    text-align: left;
     width: 11ch;
     color: var(--text);
     font-weight: 600;
 }
+
+.article-price {
+    align-content: center;
+}
+
 
 .budget-client {
     color: var(--text);
@@ -119,10 +163,39 @@ ul {
     color: var(--muted);
 }
 
-.budget-number {
-
+.settings {
+    background-color: var(--card-bg);
+    min-height: 800px;
 }
 
-.budget-date {
+.setting-form {
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 1rem;
+    background-color: var(--card-bg);
+}
 
+label {
+    font-weight: 500;
+    padding: 0 0.5rem 0 0.5rem;
+}
+
+input {
+    display: block;
+    width: 100%;
+    height: 2rem;
+    background-color: var(--bg);
+    padding: 0 0.3rem 0 0.3rem;
+}
+
+button {
+    height: 2rem;
+    margin-right: 0.5rem;
+    margin-left: 0.5rem;
+}
+
+.name, .last-name, .tax-id, .address, .phone, .email, .conditions, .validity-days {
+    flex-grow: 1;
+    flex-basis: 8rem;
 }

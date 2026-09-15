@@ -1,13 +1,11 @@
 {% extends "base.html" %}
-
 {% block content %}
-
-    <h3>HISTORIAL</h3>
-    <p> {{ number_budgets }} presupuestos </p>
-
+    <div class="page-title">
+        <h2>HISTORIAL</h2>
+        <p> {{ number_budgets }} presupuestos </p>
+    </div>
     <ul>
         {% for budget in budgets %}
-
         <li class="budget-row">
             <a class="budget-link" href="{{ url_for('preview', number=budget['number']) }}">
                 <div class="budget-info">
@@ -22,11 +20,8 @@
                     <div class="budget-total"> {{ money(budget['totals']['total']) }} </div>
                 </div>
             </a>
-
             <a class="budget-delete" href="{{ url_for('delete_budget', number=budget['number']) }}">Borrar</a>
         </li>
-
         {% endfor %}
     </ul>
-    
 {% endblock %}
