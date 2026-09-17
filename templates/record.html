@@ -1,27 +1,29 @@
 {% extends "base.html" %}
 {% block content %}
-    <div class="page-title">
-        <h2>HISTORIAL</h2>
-        <p> {{ number_budgets }} presupuestos </p>
-    </div>
-    <ul>
-        {% for budget in budgets %}
-        <li class="budget-row">
-            <a class="budget-link" href="{{ url_for('preview', number=budget['number']) }}">
-                <div class="budget-info">
-                    <div class="budget-client"> {{ budget['client']['name'] }} </div>
-                    <div class="budget-meta">
-                        <div class="budget-number"> {{ budget['number'] }} </div>
-                        <div class="budget-date"> {{ budget['date'] }} </div>
+    <div class="page">
+        <div class="page-title">
+            <h2>HISTORIAL</h2>
+            <p> {{ number_budgets }} presupuestos </p>
+        </div>
+        <ul>
+            {% for budget in budgets %}
+            <li class="row">
+                <a class="row-link" href="{{ url_for('preview', number=budget['number']) }}">
+                    <div class="row-info">
+                        <div class="row-name"> {{ budget['client']['name'] }} </div>
+                        <div class="row-meta">
+                            <div> {{ budget['number'] }} </div>
+                            <div> {{ budget['date'] }} </div>
+                        </div>
                     </div>
-                </div>
-                <div class="budget-amount">
-                    <div class="budget-type"> {{ SCOPE_ES[budget['work_type']] }} </div>
-                    <div class="budget-total"> {{ money(budget['totals']['total']) }} </div>
-                </div>
-            </a>
-            <a class="budget-delete" href="{{ url_for('delete_budget', number=budget['number']) }}">Borrar</a>
-        </li>
-        {% endfor %}
-    </ul>
+                    <div class="row-amount">
+                        <!-- <div class="row-scope"> {{ SCOPE_ES[budget['work_type']] }} </div> -->
+                        <div class="row-price"> {{ money(budget['totals']['total']) }} </div>
+                    </div>
+                </a>
+                <a class="row-delete icon-danger material-symbols-outlined " href="{{ url_for('delete_budget', number=budget['number']) }}">delete</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}

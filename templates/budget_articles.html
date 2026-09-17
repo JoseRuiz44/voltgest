@@ -2,9 +2,9 @@
 
 {% block content %}
 
-    <form method="POST" action="{{ url_for('save_articles_budget') }}">
+    <form class="form" method="POST" action="{{ url_for('save_articles_budget') }}">
 
-        <button type="submit" name="action" value="back">Volver</button>
+        <button class="button button-danger" type="submit" name="action" value="back">Volver</button>
         
         <fieldset>
             <legend>Selecciona IVA</legend>
@@ -13,8 +13,10 @@
             <input type="radio" id="vat_rate_21" name="vat_rate" value="21" {% if budget['vat_rate'] == 21 %}checked{% endif %}>
             <label for="vat_rate_21">21%</label>
         </fieldset>
-
-        <h2>Añadir artículos</h2>
+        
+        <div class="page-title">
+            <h2>Añadir artículos</h2>
+        </div>
         <ul>
             {% for a in articles %}
                 {% if a['scope'] == budget['work_type'] or a['scope'] == 'both' %}
@@ -26,6 +28,6 @@
             {% endfor %}
         </ul>
 
-        <button type="submit" name="action" value="save">Guardar artículos</button>
+        <button class="button button-primary" type="submit" name="action" value="save">Guardar artículos</button>
     </form>
 {% endblock %}

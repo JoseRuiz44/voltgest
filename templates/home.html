@@ -1,36 +1,45 @@
 {% extends "base.html" %}
 {% block content %}
-
-    <h1><span class="title first">Volt</span><span class="title second">Gest</span></h1>
-
-    <h4>NUEVO PRESUPUESTO</h4>
-
-    <div class="card">
-        <a href="{{ url_for('budget_client', work_type='new_build') }}">Obra nueva</a>
-        <a href="{{ url_for('budget_client', work_type='renovation') }}">Reforma</a>
-    </div>
-
-    <h4>ÚLTIMOS PRESUPUESTOS</h4>
-    
-    {% if last_budgets %}
-    <ul>
-        {% for budget in last_budgets %}
-        <li class="budget-row">
-            <a class="budget-link" href="{{ url_for('preview', number=budget['number']) }}">
-                <div class="budget-info">
-                    <div class="budget-client"> {{ budget['client']['name'] }} </div>
-                    <div class="budget-meta">
-                        <div class="budget-number"> {{ budget['number'] }} </div>
-                        <div class="budget-date"> {{ budget['date'] }} </div>
-                    </div>
-                </div>
-                <div class="budget-amount">
-                    <div class="budget-type"> {{ SCOPE_ES[budget['work_type']] }} </div>
-                    <div class="budget-total"> {{ money(budget['totals']['total']) }} </div>
+    <div class="page">
+        <h1 class="logo-title"><span class="icon-accent material-symbols-outlined">electric_bolt</span><span class="logo-volt">Volt</span><span class="logo-gest">Gest</span></h1>
+        <h4 class="subtitle">NUEVO PRESUPUESTO</h4>
+        <div class="cards-group">
+            <a class="card" href="{{ url_for('budget_client', work_type='new_build') }}">
+                <div class="card-inside">
+                    <span class="icon-accent material-symbols-outlined">house</span>
+                    <p class="card-name">Obra nueva</p>
+                    <p class="card-info">Instalación Completa</p>
                 </div>
             </a>
-        </li>
-        {% endfor %}
-    </ul>
+            <a class="card" href="{{ url_for('budget_client', work_type='renovation') }}">
+                <div class="card-inside">
+                    <span class="icon-accent material-symbols-outlined">build</span>
+                    <p class="card-name">Reforma</p>
+                    <p class="card-info">Cambios y Reparaciones</p>
+                </div>
+            </a>
+        </div>
+        <h4 class="subtitle">ÚLTIMOS PRESUPUESTOS</h4>
+        {% if last_budgets %}
+        <ul>
+            {% for budget in last_budgets %}
+            <li class="row">
+                <a class="row-link" href="{{ url_for('preview', number=budget['number']) }}">
+                    <div class="row-info">
+                        <div class="row-name"> {{ budget['client']['name'] }} </div>
+                        <div class="row-meta">
+                            <div> {{ budget['number'] }} </div>
+                            <div> {{ budget['date'] }} </div>
+                        </div>
+                    </div>
+                    <div class="row-amount">
+                        <!-- <div class="row-scope"> {{ SCOPE_ES[budget['work_type']] }} </div> -->
+                        <div class="row-price"> {{ money(budget['totals']['total']) }} </div>
+                    </div>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
     {% endif %}
+    </div>
 {% endblock %}

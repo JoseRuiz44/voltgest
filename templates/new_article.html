@@ -1,24 +1,22 @@
 {% extends "base.html" %}
-
 {% block content %}
-
-<h2>Nuevo artículo</h2>
-    <form method="POST" action="{{ url_for('new_article') }}">
-
-        <label>Nombre:</label>
-        <input type="text" name="name" value="{{ name if name else '' }}">
-
-        <label>Precio:</label>
-        <input type="text" name="price" value="{{ price if price else '' }}">
-
-        <label>Ámbito:</label>
-        <select name="scope">
-            <option value="new_build">Obra nueva</option>
-            <option value="renovation">Reforma</option>
-            <option value="both">Ambos</option>
-        </select>
-
-        <button type="submit">Guardar</button>
+    <div class="page-title">
+        <h2>Nuevo artículo</h2>
+    </div>
+    <form class="form" method="POST" action="{{ url_for('new_article') }}">
+        <label class="name" for="name-field">Nombre:
+            <input id="name-field" type="text" name="name" value="{{ name if name else '' }}">
+        </label>
+        <label class="price" for="price-field">Precio:
+            <input id="price-field" type="text" name="price" value="{{ price if price else '' }}">
+        </label>
+        <label class="scope" for="scope-field">Ámbito:
+            <select id="scope-field" name="scope">
+                <option value="new_build">Obra nueva</option>
+                <option value="renovation">Reforma</option>
+                <option value="both">Ambos</option>
+            </select>
+        </label>
+        <button class="button button-primary" type="submit">Guardar</button>
     </form>
-
 {% endblock %}

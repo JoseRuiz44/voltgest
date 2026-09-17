@@ -1,22 +1,24 @@
 {% extends "base.html" %}
 {% block content %}
-    <div class="page-title">
-        <h2>CATÁLOGO</h2>
-        <p> {{ number_articles }} artículos </p>
+    <div class="page">
+        <div class="page-title">
+            <h2>CATÁLOGO</h2>
+            <p> {{ number_articles }} artículos </p>
+        </div>
+        <ul class="article-list">
+            {% for article in articles %}
+                <li class="row article-row">
+                    <a class="row-link" href="{{ url_for('edit_article', name=article['name']) }}">
+                        <div class="row-info">
+                            <div class="row-name"> {{ article['name'] }} </div>
+                            <div class="row-scope article-scope"> {{ SCOPE_ES[article['scope']] }} </div>
+                        </div>
+                        <div class="row-price article-price"> {{ money(article['price']) }} </div>
+                    </a>
+                    <a class="row-delete icon icon-danger material-symbols-outlined " href="{{ url_for('delete_article', name=article['name']) }}">delete</a>
+                </li>
+            {% endfor %}
+        </ul>
+            <a class="fab material-symbols-outlined" href="{{ url_for('new_article') }}">add</a>
     </div>
-    <a class="article-new" href="{{ url_for('new_article') }}">Nuevo artículo</a>
-    <ul>
-        {% for article in articles %}
-            <li class="article-row">
-                <a class="article-edit" href="{{ url_for('edit_article', name=article['name']) }}">
-                    <div class="article-info">
-                        <div class="article-name"> {{ article['name'] }} </div>
-                        <div class="article-scope"> {{ SCOPE_ES[article['scope']] }} </div>
-                    </div>
-                    <div class="article-price"> {{ money(article['price']) }} </div>
-                </a>
-                <a class="article-delete" href="{{ url_for('delete_article', name=article['name']) }}">Borrar</a>
-            </li>
-        {% endfor %}
-    </ul>
 {% endblock %}

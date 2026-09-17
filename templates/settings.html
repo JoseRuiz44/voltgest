@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
-    <div class="settings">
+    <div class="page">
         <div class="page-title">
             <h2>AJUSTES</h2>
         </div>
-        <form class="setting-form" method="POST" action="{{ url_for('settings') }}">
-            <h4>DATOS DEL NEGOCIO</h4>
+        <form class="form" method="POST" action="{{ url_for('settings') }}">
+            <h4 class="row-text"><span class="icon-muted material-symbols-outlined">business</span>DATOS DEL NEGOCIO</h4>
             <label class="name" for="name-field">Nombre:
                 <input id="name-field" type="text" name="name" value="{{ config['business']['name'] }}">
             </label>
@@ -13,10 +13,7 @@
                 <input id="last-name-field" type="text" name="last_name" value="{{ config['business']['last_name'] }}">
             </label>
             <label class="tax-id" for="tax-id-field">NIF / CIF:
-                <input id="tax_id-field" type="text" name="tax_id" value="{{ config['business']['tax_id'] }}">
-            </label>
-            <label class="address" for="address-field">Dirección:
-                <input id="address-field" type="text" name="address" value="{{ config['business']['address'] }}">
+                <input id="tax-id-field" type="text" name="tax_id" value="{{ config['business']['tax_id'] }}">
             </label>
             <label class="phone" for="phone-field">Teléfono:
                 <input id="phone-field" type="text" name="phone" value="{{ config['business']['phone'] }}">
@@ -24,14 +21,17 @@
             <label class="email" for="email-field">Email:
                 <input id="email-field" type="text" name="email" value="{{ config['business']['email'] }}">
             </label>
-            <h4>PRESUPUESTO</h4>
+            <label class="address" for="address-field">Dirección:
+                <input id="address-field" type="text" name="address" value="{{ config['business']['address'] }}">
+            </label>
+            <h4 class="row-description row-text"><span class="icon-muted material-symbols-outlined">description</span>PRESUPUESTO</h4>
             <label class="conditions" for="conditions-field">Condiciones:
-                <input id="conditions-field" type="text" name="conditions" value="{{ config['conditions'] }}">
+                <textarea name="conditions" id="conditions-field">{{ config['conditions'] }}</textarea>
             </label>
             <label class="validity-days" for="validity-days-field">Validez:
                 <input id="validity-days-field" type="text" name="validity_days" value="{{ config['validity_days'] }}">
             </label>
-            <button type="submit">Guardar cambios</button>
+            <button class="button button-primary" type="submit">Guardar cambios</button>
         </form>
     </div>
 {% endblock %}
