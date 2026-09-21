@@ -3,23 +3,25 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600&display=swap">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
         <title>VoltGest</title>
     </head>
     <body>
-        <main>
+        <main class=" {% if session['budget'] %} build-budget-articles {% endif %}">
             {% for message in get_flashed_messages() %}
                 <p>{{ message }}</p>
             {% endfor %}
             {% block content %}{% endblock %}
         </main>
-        <nav class="main-nav">
-            <a class="a-transform a-nav {% if request.endpoint == 'home' %}a-nav-active{% endif %}" href="{{ url_for('home') }}" {% if session['budget'] %}onclick="return confirm('Al salir se perderán los datos del presupuesto, ¿continuar?')"{% endif %}><span class="icon-nav material-symbols-outlined">home</span> <span class="nav-text">Inicio</span></a>
-            <a class="a-transform a-nav {% if request.endpoint == 'catalog' %}a-nav-active{% endif %}" href="{{ url_for('catalog') }}" {% if session['budget'] %}onclick="return confirm('Al salir se perderán los datos del presupuesto, ¿continuar?')"{% endif %}><span class="icon-nav material-symbols-outlined">view_list</span> <span class="nav-text">Catálogo</span></a>
-            <a class="a-transform a-nav {% if request.endpoint == 'record' %}a-nav-active{% endif %}" href="{{ url_for('record') }}" {% if session['budget'] %}onclick="return confirm('Al salir se perderán los datos del presupuesto, ¿continuar?')"{% endif %}><span class="icon-nav material-symbols-outlined">work_history</span> <span class="nav-text">Historial</span></a>
-            <a class="a-transform a-nav {% if request.endpoint == 'settings' %}a-nav-active{% endif %}" href="{{ url_for('settings') }}" {% if session['budget'] %}onclick="return confirm('Al salir se perderán los datos del presupuesto, ¿continuar?')"{% endif %}><span class="icon-nav material-symbols-outlined">settings</span> <span class="nav-text">Ajustes</span></a>
-        </nav>
+        {% if not session['budget'] %}
+            <nav class="main-nav">
+                <a class="a-reset a-nav {% if request.endpoint == 'home' %}a-nav-active{% endif %}" href="{{ url_for('home') }}" {% if session['budget'] %}onclick="return confirm('Al salir se perderán los datos del presupuesto, ¿continuar?')"{% endif %}><span class="icon-nav material-icons">home</span> <span class="nav-text">Inicio</span></a>
+                <a class="a-reset a-nav {% if request.endpoint == 'catalog' %}a-nav-active{% endif %}" href="{{ url_for('catalog') }}" {% if session['budget'] %}onclick="return confirm('Al salir se perderán los datos del presupuesto, ¿continuar?')"{% endif %}><span class="icon-nav material-icons">view_list</span> <span class="nav-text">Catálogo</span></a>
+                <a class="a-reset a-nav {% if request.endpoint == 'record' %}a-nav-active{% endif %}" href="{{ url_for('record') }}" {% if session['budget'] %}onclick="return confirm('Al salir se perderán los datos del presupuesto, ¿continuar?')"{% endif %}><span class="icon-nav material-icons">work_history</span> <span class="nav-text">Historial</span></a>
+                <a class="a-reset a-nav {% if request.endpoint == 'settings' %}a-nav-active{% endif %}" href="{{ url_for('settings') }}" {% if session['budget'] %}onclick="return confirm('Al salir se perderán los datos del presupuesto, ¿continuar?')"{% endif %}><span class="icon-nav material-icons">settings</span> <span class="nav-text">Ajustes</span></a>
+            </nav>
+        {% endif %}
     </body>
 </html>

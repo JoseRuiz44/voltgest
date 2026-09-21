@@ -3,12 +3,11 @@
     <div class="page">
         <div class="page-title">
             <div class="back-title">
-                <a class="a-transform" href="{{ url_for('home') }}" onclick="return confirm('Al salir se perderán los datos del presupuesto, ¿continuar?')"><span class="icon-cancel material-symbols-outlined">arrow_back</span>
-                </a>
+                <a class="a-reset" href="{{ url_for('home') }}" onclick="return confirm('Al salir se perderán los datos del presupuesto, ¿continuar?')"><span class="icon-cancel material-icons">arrow_back</span></a>
                 <h2>Datos del cliente</h2>
             </div>
             <div>
-                <a class="a-transform" href="{{ url_for('home') }}" onclick="return confirm('Al salir se perderán los datos del presupuesto, ¿continuar?')"><span class="icon-cancel material-symbols-outlined">close</span></a>
+                <a class="a-reset" href="{{ url_for('home') }}" onclick="return confirm('Al salir se perderán los datos del presupuesto, ¿continuar?')"><span class="icon-cancel material-icons">close</span></a>
             </div>
         </div>
         <form class="form" method="POST" action="{{ url_for('save_client') }}">

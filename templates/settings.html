@@ -5,7 +5,7 @@
             <h2>AJUSTES</h2>
         </div>
         <form class="form" method="POST" action="{{ url_for('settings') }}">
-            <h4 class="row-text"><span class="icon-muted material-symbols-outlined">business</span>DATOS DEL NEGOCIO</h4>
+            <h4 class="row-text"><span class="icon-muted material-icons">business</span>DATOS DEL NEGOCIO</h4>
             <label class="name" for="name-field">Nombre:
                 <input id="name-field" type="text" name="name" value="{{ config['business']['name'] }}">
             </label>
@@ -24,7 +24,7 @@
             <label class="address" for="address-field">Dirección:
                 <input id="address-field" type="text" name="address" value="{{ config['business']['address'] }}">
             </label>
-            <h4 class="row-description row-text"><span class="icon-muted material-symbols-outlined">description</span>PRESUPUESTO</h4>
+            <h4 class="row-description row-text"><span class="icon-muted material-icons">description</span>PRESUPUESTO</h4>
             <label class="conditions" for="conditions-field">Condiciones:
                 <textarea name="conditions" id="conditions-field">{{ config['conditions'] }}</textarea>
             </label>

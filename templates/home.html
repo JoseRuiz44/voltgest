@@ -1,19 +1,19 @@
 {% extends "base.html" %}
 {% block content %}
     <div class="page">
-        <h1 class="logo-title"><span class="icon-accent material-symbols-outlined">electric_bolt</span><span class="logo-volt">Volt</span><span class="logo-gest">Gest</span></h1>
+        <h1 class="logo-title"><span class="icon-logo material-icons">electric_bolt</span><span class="logo-volt">Volt</span><span class="logo-gest">Gest</span></h1>
         <h4 class="subtitle">NUEVO PRESUPUESTO</h4>
         <div class="cards-group">
             <a class="card" href="{{ url_for('budget_client', work_type='new_build') }}">
                 <div class="card-inside">
-                    <span class="icon-accent material-symbols-outlined">house</span>
+                    <span class="icon-accent material-icons">house</span>
                     <p class="card-name">Obra nueva</p>
                     <p class="card-info">Instalación Completa</p>
                 </div>
             </a>
             <a class="card" href="{{ url_for('budget_client', work_type='renovation') }}">
                 <div class="card-inside">
-                    <span class="icon-accent material-symbols-outlined">build</span>
+                    <span class="icon-accent material-icons">build</span>
                     <p class="card-name">Reforma</p>
                     <p class="card-info">Cambios y Reparaciones</p>
                 </div>

@@ -7,7 +7,7 @@
         </div>
         <ul class="article-list">
             {% for article in articles %}
-                <li class="row article-row">
+                <li class="row">
                     <a class="row-link" href="{{ url_for('edit_article', name=article['name']) }}">
                         <div class="row-info">
                             <div class="row-name"> {{ article['name'] }} </div>
@@ -15,10 +15,10 @@
                         </div>
                         <div class="row-price article-price"> {{ money(article['price']) }} </div>
                     </a>
-                    <a class="row-delete icon icon-danger material-symbols-outlined " href="{{ url_for('delete_article', name=article['name']) }}">delete</a>
+                    <a class="row-delete icon-muted material-icons " href="{{ url_for('delete_article', name=article['name']) }}">delete</a>
                 </li>
             {% endfor %}
         </ul>
-            <a class="fab material-symbols-outlined" href="{{ url_for('new_article') }}">add</a>
+            <a class="fab material-icons" href="{{ url_for('new_article') }}">add</a>
     </div>
 {% endblock %}

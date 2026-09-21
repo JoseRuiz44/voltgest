@@ -21,7 +21,7 @@
                         <div class="row-price"> {{ money(budget['totals']['total']) }} </div>
                     </div>
                 </a>
-                <a class="row-delete icon-danger material-symbols-outlined " href="{{ url_for('delete_budget', number=budget['number']) }}">delete</a>
+                <a class="row-delete icon-muted material-icons" href="{{ url_for('delete_budget', number=budget['number']) }}">delete</a>
             </li>
             {% endfor %}
         </ul>
