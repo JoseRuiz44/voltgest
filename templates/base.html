@@ -23,5 +23,6 @@
                 <a class="a-reset a-nav {% if request.endpoint == 'settings' %}a-nav-active{% endif %}" href="{{ url_for('settings') }}" {% if session['budget'] %}onclick="return confirm('Al salir se perderán los datos del presupuesto, ¿continuar?')"{% endif %}><span class="icon-nav material-icons">settings</span> <span class="nav-text">Ajustes</span></a>
             </nav>
         {% endif %}
+        {% block scripts %}{% endblock %}
     </body>
 </html>

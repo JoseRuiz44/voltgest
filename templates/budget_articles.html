@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% block content %}
-
     <div class="page">
         <div class="page-title">
             <div class="back-title">
@@ -22,7 +21,6 @@
                     <label for="vat_rate_21">21%</label>
                 </div>
             </div>
-
             <ul class="budget-articles">
                 {% for article in articles %}
                     {% if article['scope'] == budget['work_type'] or article['scope'] == 'both' %}
@@ -43,44 +41,17 @@
         </form>
         <div class="amount-bar-info">
             <div class="amount-column">
-                <p>Base 1000000,00 €</p>
-                <p>Total - X lineas</p>
-                <p>1000000,00 €</p>
+                <p>Base <span id="base-amount"></span></p>
+                <p>TOTAL · <span id="lines-budget"></span> LINEAS</p>
+                <p><span id="total-amount"></span></p>
             </div>
             <div class="vat-column">
-                <div><p>21% - 10000,00 €</p></div>
-                <button class="button button-primary" form="budget-articles" type="submit" name="action" value="save">Guardar artículos</button>
+                <p><span id="vat-rate"></span>% · <span id="vat-amount"></span></p>
+                <button class="button button-primary" form="budget-articles" type="submit" name="action" value="save">Ver resumen</button>
             </div>
         </div>
     </div>
-    <script>
-        <!-- Funcion para sumar o restar articulos al presupuesto -->
-        document.addEventListener("click", (event) => {
-            const button = event.target.closest("[data-step]");
-            if (!button) return;
-            const input = button.parentElement.querySelector("input[type=number]");
-            if (button.dataset.step === "up") {
-                input.stepUp();
-            } else {
-                input.stepDown();
-            }
-        });
-
-        <!-- Mostrar iva, base, total y lineas de forma dinámica -->
-        const row = document.querySelector(".budget-row")
-        const rows = document.querySelectorAll(".budget-row")
-        let total = 0
-        let lines = 0
-        for (const row of rows) {
-            const units = document.querySelector(".units")
-            const price = Number(row.dataset.price);
-            total += price
-            if (units > 0 ) {
-                lines += 1
-            }
-        }
-
-
-
-    </script>
+{% endblock %}
+{% block scripts %}
+    <script src="{{ url_for('static', filename='articles.js') }}" defer></script>
 {% endblock %}
