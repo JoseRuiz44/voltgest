@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-    <div class="page">
+    <div class="page has-bar">
         <div class="page-title">
             <div class="back-title">
                 <button class="button-reset" form="budget-articles" type="submit" name="action" value="back"><span class="icon-cancel material-icons">arrow_back</span></button>
@@ -21,7 +21,7 @@
                     <label for="vat_rate_21">21%</label>
                 </div>
             </div>
-            <ul class="budget-articles">
+            <ul class="budget-articles main-new-budget">
                 {% for article in articles %}
                     {% if article['scope'] == budget['work_type'] or article['scope'] == 'both' %}
                         <li class="budget-row" data-price="{{ article['price'] }}">

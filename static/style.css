@@ -12,7 +12,7 @@
     --danger: #9C0909;         /*Errores*/
     --radio: 4px;               /*Radio de esquinas*/
     --height-nav: 4rem;
-    --height-amount : 7rem;
+    --height-amount: 7rem;
 }
 
 *, *::before, *::after {
@@ -31,12 +31,6 @@ body {
 
 main {
     width: 100%;
-    padding-bottom: var(--height-nav);
-}
-
-main.build-budget-articles {
-    width: 100%;
-    padding-bottom: var(--height-amount);
 }
 
 nav {
@@ -57,6 +51,15 @@ nav.main-nav {
     min-height: var(--height-nav);
 }
 
+.has-nav .page {
+    padding-bottom: calc(var(--height-nav) + 1rem);
+}
+
+.page.has-bar {
+    padding-bottom: calc(var(--height-amount) + 1rem);
+}
+
+
 ul {
     list-style: none;
     padding: 0;
@@ -64,7 +67,7 @@ ul {
 }
 
 ul.article-list {
-    padding-bottom: calc(var(--height-nav) + 1rem)
+    padding-bottom: var(--height-nav);
 }
 
 h4 {
@@ -172,9 +175,20 @@ button:active {
     padding-bottom: 1rem;
 }
 
+.page-title-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    line-height: 1.2;
+    background-color: var(--card-bg);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
+}
+
 .back-title {
     display: flex;
     width: 100%;
+    min-width: 0;
     gap: 1rem;
     align-items:center;
 }
@@ -412,7 +426,7 @@ input.units {
 .page {
     padding: 1rem;
     background-color: var(--card-bg);
-    min-height: calc(100dvh - var(--height-nav));
+    min-height: 100dvh;
 }
 
 .form {
@@ -554,3 +568,53 @@ input[type="number"] {
     appearance: textfield;
 }
 
+.close-box {
+    padding-left: 1rem;
+}
+
+.title-header {
+    min-width: 0;
+}
+
+.header-info {
+    display: flex;
+}
+
+.header-client {
+    color: var(--text);
+    font-weight: 500;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    
+}
+
+.header-worktype {
+    color: var(--muted);
+    flex-shrink: 0;
+}
+
+.budget-articles{
+
+}
+
+.line-row {
+
+}
+
+.line-info {
+
+}
+
+.line-name {
+
+}
+
+.line-units-base {
+
+}
+
+.line-total-base {
+
+}

@@ -9,7 +9,7 @@
         <title>VoltGest</title>
     </head>
     <body>
-        <main class=" {% if session['budget'] %} build-budget-articles {% endif %}">
+        <main class="{% if not session['budget'] %}has-nav{% endif %}">
             {% for message in get_flashed_messages() %}
                 <p>{{ message }}</p>
             {% endfor %}

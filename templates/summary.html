@@ -1,27 +1,47 @@
 {% extends "base.html" %}
-
 {% block content %}
-
-    <a href="{{ url_for('budget_articles') }}">Volver</a>
-
-    <h2>Resumen del presupuesto</h2>
-
-    <p>Tipo: {{ SCOPE_ES[budget['work_type']] }}</p>
-    <p>Cliente: {{ budget['client']['name'] }}</p>
-    
-    <h3>Artículos</h3>
-    <ul>
-        {% for line in budget['lines'] %}
-            <li>{{ line['article'] }} - {{ line['units'] }} uds - {{ money(line['price']) }}/ud - {{ money(line['price'] * line['units']) }}</li>
-        {% endfor %}
-    </ul>
-
-    <p>Base imponible: {{ money(totals['base']) }}</p>
-    <p>IVA ({{ budget['vat_rate'] }}%): {{ money(totals['quota']) }}</p>
-    <p>TOTAL: {{ money(totals['total']) }}</p>
-    
-    <form method="POST" action="{{ url_for('save_budget_final') }}">
-        <button type="submit">Guardar presupuesto</button>
-    </form>
-
+    <div class="page has-bar">
+        <div class="page-title-summary">
+            <div class="back-title">
+                <a class="a-reset" href="{{ url_for('budget_articles') }}"><span class="icon-cancel material-icons">arrow_back</span></a>
+                <div class="title-header">
+                    <h2>RESUMEN</h2>
+                    <div class="header-info"><span class="header-client"> {{ budget['client']['name'] }} </span>&nbsp;<span class="header-worktype">· {{ SCOPE_ES[budget['work_type']] }} </span></div>
+                </div>
+            </div>
+            <div class="close-box">
+                <a class="a-reset close" href="{{ url_for('home') }}" onclick="return confirm('Al salir se perderán los datos del presupuesto, ¿continuar?')"><span class="icon-cancel material-icons">close</span></a>
+            </div>
+        </div>
+        <ul class="budget-articles">
+            {% for line in budget['lines'] %}
+                    <li class="line-row">
+                        <div class="line-info">
+                            <div class="line-name"> {{ line['article'] }} </div>
+                            <div class="line-units-base"><span> {{ line['units'] }} x</span><span> {{ money(line['price']) }} </span></div>
+                        </div>
+                        <div class="line-total-base"> {{ money(line['price'] * line['units']) }} </div>
+                    </li>
+            {% endfor %}
+        </ul>
+        <div class="amount-summary-info">
+            <div class="bar-base">
+                <span class="base-text">Base imponible</span>
+                <span class="base-amount"> {{ money(totals['base']) }} </span>
+            </div>
+            <div class="bar-vat">
+                <span class="vat-text">IVA ({{ budget['vat_rate'] }}%)</span>
+                <span class="vat-amount"> {{ money(totals['quota']) }} </span>
+            </div>
+            <div class="total-row">
+                <div>
+                    <div class="total-text">TOTAL</div>
+                    <div class="total-amount"> {{ money(totals['total']) }} </div>
+                </div>
+                <form method="POST" action="{{ url_for('save_budget_final') }}">
+                    <button class="button button-primary" type="submit" name="action" value="save">Generar</button>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}
