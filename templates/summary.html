@@ -1,44 +1,48 @@
 {% extends "base.html" %}
 {% block content %}
-    <div class="page has-bar">
+    <div class="page has-bar-total">
         <div class="page-title-summary">
             <div class="back-title">
                 <a class="a-reset" href="{{ url_for('budget_articles') }}"><span class="icon-cancel material-icons">arrow_back</span></a>
                 <div class="title-header">
                     <h2>RESUMEN</h2>
-                    <div class="header-info"><span class="header-client"> {{ budget['client']['name'] }} </span>&nbsp;<span class="header-worktype">· {{ SCOPE_ES[budget['work_type']] }} </span></div>
+                    <div class="header-info"><span class="header-client"> {{ budget['client']['name'] }} </span><span class="header-worktype">· {{ SCOPE_ES[budget['work_type']] }} </span></div>
                 </div>
             </div>
             <div class="close-box">
-                <a class="a-reset close" href="{{ url_for('home') }}" onclick="return confirm('Al salir se perderán los datos del presupuesto, ¿continuar?')"><span class="icon-cancel material-icons">close</span></a>
+                <a class="a-reset" href="{{ url_for('home') }}" onclick="return confirm('Al salir se perderán los datos del presupuesto, ¿continuar?')"><span class="icon-cancel material-icons">close</span></a>
             </div>
         </div>
-        <ul class="budget-articles">
+        <ul>
             {% for line in budget['lines'] %}
-                    <li class="line-row">
-                        <div class="line-info">
-                            <div class="line-name"> {{ line['article'] }} </div>
-                            <div class="line-units-base"><span> {{ line['units'] }} x</span><span> {{ money(line['price']) }} </span></div>
+                <li class="row row-static">
+                    <div class="row-info">
+                        <div class="row-name"> {{ line['article'] }} </div>
+                        <div class="row-meta row-calc">
+                            <span> {{ line['units'] }} </span>
+                            <span>×</span>
+                            <span> {{ money(line['price']) }} </span>
                         </div>
-                        <div class="line-total-base"> {{ money(line['price'] * line['units']) }} </div>
-                    </li>
+                    </div>
+                    <div class="row-price"> {{ money(line['price'] * line['units']) }} </div>
+                </li>
             {% endfor %}
         </ul>
         <div class="amount-summary-info">
             <div class="bar-base">
-                <span class="base-text">Base imponible</span>
-                <span class="base-amount"> {{ money(totals['base']) }} </span>
+                <span>Base imponible</span>
+                <span> {{ money(totals['base']) }} </span>
             </div>
             <div class="bar-vat">
-                <span class="vat-text">IVA ({{ budget['vat_rate'] }}%)</span>
-                <span class="vat-amount"> {{ money(totals['quota']) }} </span>
+                <span>IVA ({{ budget['vat_rate'] }}%)</span>
+                <span> {{ money(totals['quota']) }} </span>
             </div>
             <div class="total-row">
-                <div>
+                <div class="column-total">
                     <div class="total-text">TOTAL</div>
                     <div class="total-amount"> {{ money(totals['total']) }} </div>
                 </div>
-                <form method="POST" action="{{ url_for('save_budget_final') }}">
+                <form class="generate-button" method="POST" action="{{ url_for('save_budget_final') }}">
                     <button class="button button-primary" type="submit" name="action" value="save">Generar</button>
                 </form>
             </div>

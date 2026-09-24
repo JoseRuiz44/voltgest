@@ -21,7 +21,7 @@
                     <label for="vat_rate_21">21%</label>
                 </div>
             </div>
-            <ul class="budget-articles main-new-budget">
+            <ul>
                 {% for article in articles %}
                     {% if article['scope'] == budget['work_type'] or article['scope'] == 'both' %}
                         <li class="budget-row" data-price="{{ article['price'] }}">

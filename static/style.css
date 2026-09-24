@@ -13,6 +13,7 @@
     --radio: 4px;               /*Radio de esquinas*/
     --height-nav: 4rem;
     --height-amount: 7rem;
+    --height-total: 9rem;
 }
 
 *, *::before, *::after {
@@ -24,9 +25,7 @@ body {
     background-color: var(--bg);
     color: var(--text);
     font-family: 'Roboto', system-ui, sans-serif;
-    font-size: 1rem;
     line-height: 1.5;
-    padding: 0;
 }
 
 main {
@@ -59,6 +58,9 @@ nav.main-nav {
     padding-bottom: calc(var(--height-amount) + 1rem);
 }
 
+.page.has-bar-total {
+    padding-bottom: calc(var(--height-total) + 1rem);
+}
 
 ul {
     list-style: none;
@@ -259,7 +261,7 @@ button:active {
     background-color: var(--card-bg);
     border: 1px solid var(--border);
     border-radius: var(--radio);
-    padding: 1rem 1rem 1rem 1rem;
+    padding: 1rem;
     text-decoration: none;
     color: inherit;
     min-height: 7rem;
@@ -295,6 +297,12 @@ button:active {
     background-color: var(--card-bg);
     transition: background-color 150ms ease;
 }
+
+.row.row-static:hover,
+.row.row-static:active {
+    background-color: var(--card-bg);
+}
+
 
 .budget-row {
     display: flex;
@@ -335,7 +343,7 @@ span.icon-units {
 
 input.units {
     text-align: center;
-    width: 3ch;
+    width: 4ch;
     color: var(--text);
     background-color: var(--card-bg);
     border: none;
@@ -400,10 +408,10 @@ input.units {
 
 .row-price {
     text-align: right;
-    align-content: center;
     width: 11ch;
     color: var(--text);
     font-weight: 600;
+    align-content: center;
     font-variant-numeric: tabular-nums;
 }
 
@@ -536,8 +544,9 @@ input.units {
     background-color: var(--card-bg);
     min-height: var(--height-amount);
     border-top: 1px solid var(--border);
-    padding: 1rem 1rem 1rem 1rem;
+    padding: 1rem;
 }
+
 .amount-column {
     display: flex;
     flex-direction: column;
@@ -578,6 +587,7 @@ input[type="number"] {
 
 .header-info {
     display: flex;
+    gap: 0.25rem;
 }
 
 .header-client {
@@ -595,26 +605,59 @@ input[type="number"] {
     flex-shrink: 0;
 }
 
-.budget-articles{
-
+.amount-summary-info {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    z-index: 100;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    color: var(--highlight);
+    background-color: var(--total);
+    min-height: var(--height-total);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 1rem;
 }
 
-.line-row {
-
+.bar-base {
+    display: flex;
+    justify-content: space-between;
 }
 
-.line-info {
-
+.bar-vat {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 0.5rem;
 }
 
-.line-name {
-
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 0.5rem;
 }
 
-.line-units-base {
-
+.column-total {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
 }
 
-.line-total-base {
+.generate-button {
+    display: flex;
+    align-items: center;
+}
 
+.total-text {
+    font-size: 0.75rem;
+}
+
+.total-amount {
+    font-size: 1.75rem;
+    font-weight: 500;
+}
+
+.row-meta.row-calc {
+    gap: 0.2rem;
 }
