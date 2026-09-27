@@ -181,7 +181,7 @@ def new_article():
         return redirect(url_for("catalog"))
     return render_template("new_article.html")
 
-@app.route("/catalog/delete/<name>")
+@app.route("/catalog/delete/<path:name>", methods=["POST"])
 def delete_article(name):
     articles = load_articles()
     articles = [a for a in articles if a['name'] != name]
@@ -194,7 +194,7 @@ def find_article(articles, name):
             return a
     return None
 
-@app.route("/catalog/edit/<name>", methods=["GET", "POST"])
+@app.route("/catalog/edit/<path:name>", methods=["GET", "POST"])
 def edit_article(name):
     articles = load_articles()
     current_article = find_article(articles, name)
@@ -241,12 +241,17 @@ def record():
     number_budgets = len(budgets)
     return render_template("record.html", budgets=budgets, number_budgets=number_budgets)
 
-@app.route("/budget/delete/<number>")
+@app.route("/budget/delete/<number>", methods=["POST"])
 def delete_budget(number):
     budgets = load_budgets()
     budgets = [b for b in budgets if b['number'] != number]
     save_budgets(budgets)
     return redirect(url_for("record"))
+
+@app.route("/budget/cancel", methods=["POST"])
+def cancel_budget():
+    session.pop('budget', None)
+    return redirect(url_for("home"))
 
 @app.route("/settings", methods=["GET", "POST"])
 def settings():

@@ -15,7 +15,11 @@
                         </div>
                         <div class="row-price article-price"> {{ money(article['price']) }} </div>
                     </a>
-                    <a class="row-delete icon-muted material-icons " href="{{ url_for('delete_article', name=article['name']) }}">delete</a>
+                    <button type="button" class="row-delete icon-muted material-icons button-reset"
+                        aria-label="Borrar"
+                        data-confirm-url="{{ url_for('delete_article', name=article['name']) }}"
+                        data-confirm-text="¿Borrar «{{ article['name'] }}»?"
+                        data-confirm-action="Borrar">delete</button>
                 </li>
             {% endfor %}
         </ul>

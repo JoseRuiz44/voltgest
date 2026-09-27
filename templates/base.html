@@ -17,12 +17,21 @@
         </main>
         {% if not session['budget'] %}
             <nav class="main-nav">
-                <a class="a-reset a-nav {% if request.endpoint == 'home' %}a-nav-active{% endif %}" href="{{ url_for('home') }}" {% if session['budget'] %}onclick="return confirm('Al salir se perderán los datos del presupuesto, ¿continuar?')"{% endif %}><span class="icon-nav material-icons">home</span> <span class="nav-text">Inicio</span></a>
-                <a class="a-reset a-nav {% if request.endpoint == 'catalog' %}a-nav-active{% endif %}" href="{{ url_for('catalog') }}" {% if session['budget'] %}onclick="return confirm('Al salir se perderán los datos del presupuesto, ¿continuar?')"{% endif %}><span class="icon-nav material-icons">view_list</span> <span class="nav-text">Catálogo</span></a>
-                <a class="a-reset a-nav {% if request.endpoint == 'record' %}a-nav-active{% endif %}" href="{{ url_for('record') }}" {% if session['budget'] %}onclick="return confirm('Al salir se perderán los datos del presupuesto, ¿continuar?')"{% endif %}><span class="icon-nav material-icons">work_history</span> <span class="nav-text">Historial</span></a>
-                <a class="a-reset a-nav {% if request.endpoint == 'settings' %}a-nav-active{% endif %}" href="{{ url_for('settings') }}" {% if session['budget'] %}onclick="return confirm('Al salir se perderán los datos del presupuesto, ¿continuar?')"{% endif %}><span class="icon-nav material-icons">settings</span> <span class="nav-text">Ajustes</span></a>
+                <a class="a-reset a-nav {% if request.endpoint == 'home' %}a-nav-active{% endif %}" href="{{ url_for('home') }}"><span class="icon-nav material-icons">home</span><span class="nav-text">Inicio</span></a>
+                <a class="a-reset a-nav {% if request.endpoint == 'catalog' %}a-nav-active{% endif %}" href="{{ url_for('catalog') }}"><span class="icon-nav material-icons">view_list</span> <span class="nav-text">Catálogo</span></a>
+                <a class="a-reset a-nav {% if request.endpoint == 'record' %}a-nav-active{% endif %}" href="{{ url_for('record') }}"><span class="icon-nav material-icons">work_history</span> <span class="nav-text">Historial</span></a>
+                <a class="a-reset a-nav {% if request.endpoint == 'settings' %}a-nav-active{% endif %}" href="{{ url_for('settings') }}"><span class="icon-nav material-icons">settings</span> <span class="nav-text">Ajustes</span></a>
             </nav>
         {% endif %}
+        <dialog class="confirm-dialog">
+            <p class="confirm-question"></p>
+            <p class="confirm-note">Esta acción no se puede deshacer.</p>
+            <form class="confirm-actions" method="POST">
+                <button type="submit" class="confirm-cancel" formmethod="dialog" autofocus>Cancelar</button>
+                <button type="submit" class="confirm-accept"></button>
+            </form>
+        </dialog>
+        <script src="{{ url_for('static', filename='confirm.js') }}" defer></script>
         {% block scripts %}{% endblock %}
     </body>
 </html>

@@ -97,9 +97,13 @@ textarea {
     resize: vertical;
 }
 
-input:focus-visible, textarea:focus-visible {
+input:focus-visible,
+textarea:focus-visible,
+button:focus-visible,
+a:focus-visible {
     outline: 2px solid var(--accent);
-    outline-offset: 1px;
+    outline-offset: 2px;
+    border-radius: var(--radio);
 }
 
 .fab {
@@ -143,10 +147,6 @@ button:active {
     background-color: var(--accent);
 }
 
-.button-secondary {
-    background-color: var(--muted);
-}
-
 .button-danger {
     background-color: var(--danger);
 }
@@ -180,7 +180,7 @@ button:active {
 .page-title-summary {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: start;
     line-height: 1.2;
     background-color: var(--card-bg);
     border-bottom: 1px solid var(--border);
@@ -195,6 +195,14 @@ button:active {
     align-items:center;
 }
 
+.back-title-summary {
+    display: flex;
+    width: 100%;
+    min-width: 0;
+    gap: 1rem;
+    align-items: start;
+}
+
 .a-reset {
     text-decoration: none;
 }
@@ -205,6 +213,7 @@ button:active {
     box-shadow: none;
     padding: 0;
     cursor: pointer;
+    height: auto;
 }
 
 .a-nav {
@@ -660,4 +669,50 @@ input[type="number"] {
 
 .row-meta.row-calc {
     gap: 0.2rem;
+}
+
+.confirm-dialog {
+    margin: auto;
+    border: 1px solid var(--border);
+    border-radius: var(--radio);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    padding: 1.5rem;
+    width: calc(100% - 2rem);
+    max-width: 22rem;
+}
+
+.confirm-dialog::backdrop {
+    background-color: rgba(10, 41, 71, 0.5);
+}
+
+.confirm-question {
+    font-size: 1.2rem;
+}
+
+.confirm-note {
+    font-size: 0.85rem;
+    color: var(--muted);
+}
+
+.confirm-actions {
+    display: flex;
+    justify-content: end;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.confirm-cancel {
+    background-color: var(--card-bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: var(--radio);
+    padding: 0 1rem;
+}
+
+.confirm-accept {
+    background-color: var(--danger);
+    color: var(--card-bg);
+    border: none;
+    border-radius: var(--radio);
+    padding: 0 1rem;
 }

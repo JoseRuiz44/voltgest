@@ -2,7 +2,7 @@
 {% block content %}
     <div class="page has-bar-total">
         <div class="page-title-summary">
-            <div class="back-title">
+            <div class="back-title-summary">
                 <a class="a-reset" href="{{ url_for('budget_articles') }}"><span class="icon-cancel material-icons">arrow_back</span></a>
                 <div class="title-header">
                     <h2>RESUMEN</h2>
@@ -10,7 +10,11 @@
                 </div>
             </div>
             <div class="close-box">
-                <a class="a-reset" href="{{ url_for('home') }}" onclick="return confirm('Al salir se perderán los datos del presupuesto, ¿continuar?')"><span class="icon-cancel material-icons">close</span></a>
+                <button type="button" class="button-reset icon-cancel material-icons"
+                    aria-label="Descartar presupuesto"
+                    data-confirm-url="{{ url_for('cancel_budget') }}"
+                    data-confirm-text="¿Descartar este presupuesto?"
+                    data-confirm-action="Descartar">close</button>
             </div>
         </div>
         <ul>
