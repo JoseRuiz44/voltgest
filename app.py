@@ -4,11 +4,14 @@ from calculations import calculate_line, calculate_totals, generate_number
 from pdf import format_money, generate_pdf
 import datetime
 from io import BytesIO
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 app = Flask(__name__)
-app.secret_key = "voltgest-clave-secreta-2026"
-app.jinja_env.globals['money'] = format_money
+app.secret_key = os.environ["SECRET_KEY"]
 
+app.jinja_env.globals['money'] = format_money
 SCOPE_ES = {"new_build": "Obra nueva", "renovation": "Reforma", "both": "Ambos"}
 app.jinja_env.globals['SCOPE_ES'] = SCOPE_ES
 HOME_BUDGETS_COUNT = 10
