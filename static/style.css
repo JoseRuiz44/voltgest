@@ -132,15 +132,34 @@ a:focus-visible {
 }
 
 button {
+    font: inherit;
+}
+
+.button {
     height: 2rem;
     border-radius: var(--radio);
     color: var(--highlight);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    font: inherit;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 1rem;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
 }
 
-button:active {
+.button:active {
     transform: translateY(1px);
+}
+
+.button[hidden] {
+    display: none;
+}
+
+.button-icon {
+    width: 2rem;
+    padding: 0;
 }
 
 .button-primary {
@@ -205,6 +224,14 @@ button:active {
 
 .a-reset {
     text-decoration: none;
+}
+
+.share-actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    padding: 1rem;
+
 }
 
 .button-reset {
@@ -701,18 +728,24 @@ input[type="number"] {
     margin-top: 1rem;
 }
 
-.confirm-cancel {
+.button-outline {
     background-color: var(--card-bg);
     color: var(--text);
     border: 1px solid var(--border);
-    border-radius: var(--radio);
-    padding: 0 1rem;
 }
 
-.confirm-accept {
-    background-color: var(--danger);
-    color: var(--card-bg);
-    border: none;
-    border-radius: var(--radio);
-    padding: 0 1rem;
+.share-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-top: 1rem;
+}
+
+.share-row {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.share-row .button-primary {
+    flex: 1;
 }

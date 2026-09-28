@@ -27,8 +27,8 @@
             <p class="confirm-question"></p>
             <p class="confirm-note">Esta acción no se puede deshacer.</p>
             <form class="confirm-actions" method="POST">
-                <button type="submit" class="confirm-cancel" formmethod="dialog" autofocus>Cancelar</button>
-                <button type="submit" class="confirm-accept"></button>
+                <button type="submit" class="button button-outline" formmethod="dialog" autofocus>Cancelar</button>
+                <button type="submit" class="button button-danger confirm-accept"></button>
             </form>
         </dialog>
         <script src="{{ url_for('static', filename='confirm.js') }}" defer></script>
